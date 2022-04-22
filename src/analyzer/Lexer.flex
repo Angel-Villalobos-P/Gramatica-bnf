@@ -1,4 +1,4 @@
-import static Tokens.*;
+import analyzer.Tokens;import static Tokens.*;
 
 %%
 %class Lexer
@@ -33,6 +33,7 @@ case {lexema = yytext(); return Case;}
 print {lexema = yytext(); return Print;}
 return {lexema = yytext(); return Return;}
 main {lexema = yytext(); return Main;}
+break {lexema = yytext(); return Break;}
 
 "\#" {lexema = yytext(); return Numeral;}
 

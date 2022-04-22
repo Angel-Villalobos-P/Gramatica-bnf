@@ -151,6 +151,10 @@ public class MainFrm extends javax.swing.JFrame{
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Main>"});
                         
                         break;
+                    case Break:
+                        model.addRow(new Object[]{lexer.lexema, "<Reservada Break>"});
+
+                        break;
                     case Numeral:
                         model.addRow(new Object[]{lexer.lexema, "<Numeral>"});
                         
