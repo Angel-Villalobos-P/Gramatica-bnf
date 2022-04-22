@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 +
+=======
+testing lexer 123 + -
+>>>>>>> dev

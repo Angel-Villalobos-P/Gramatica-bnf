@@ -39,5 +39,6 @@ public enum Tokens {
     Identificador,
     Numero,
     Linea,
+    Break,
     ERROR
 }

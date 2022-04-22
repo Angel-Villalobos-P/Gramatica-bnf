@@ -38,10 +38,13 @@ public class Main {
                         resultado += "Simbolo no definido\n";
                         break;
                     case Identificador:
-                    case Numero:
+                    case Suma:
                         resultado += lexer.lexema + ": ->> Es un " + token + "\n";
                         break;
-                    case Suma:
+                    case Resta:
+                        resultado += lexer.lexema + ": ->> Es un " + token + "\n";
+                        break;
+                    case Multiplicacion:
                         resultado += lexer.lexema + ": ->> Es un " + token + "\n";
                         break;
                     default:
@@ -61,12 +64,13 @@ public class Main {
 //        System.out.println("--- generar lexer ---");
 //
 //        String ruta = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
-//        generarLexer(ruta);
+//        String ruta1 ="C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
+//        generarLexer(ruta1);
 //
 //        System.out.println("--- lexer generado ---");
-
-        System.out.println("===TESTING===");
-        test();
+//
+//        System.out.println("===TESTING===");
+//        test();
     }
 
     public static void generarLexer(String ruta) {
