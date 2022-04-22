@@ -16,32 +16,23 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java-cup-11a.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java_cup.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/JFlex.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+   <orderEntry type="module-library">
+         <library>
+           <CLASSES>
+             <root url="jar://$USER_HOME$/Downloads/java-cup-bin-11b-20160615/java-cup-11b-runtime.jar!/" />
+           </CLASSES>
+           <JAVADOC />
+           <SOURCES />
+         </library>
+       </orderEntry>
+       <orderEntry type="module-library">
+         <library>
+           <CLASSES>
+             <root url="jar://$USER_HOME$/Downloads/java-cup-bin-11b-20160615/java-cup-11b.jar!/" />
+           </CLASSES>
+           <JAVADOC />
+           <SOURCES />
+         </library>
+       </orderEntry>
   </component>
 </module>
