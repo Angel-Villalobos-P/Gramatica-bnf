@@ -18,9 +18,9 @@ parser code
 terminal  Int, Float, Bool, Char, String, Array, Null, If, Else, While, Switch, Case, Print, Return, Main, Numeral,
 Igual, Suma, Resta, Division, Multiplicacion, Modulo, Potencia, Parentesis_apertura, Parentesis_cierre, Llave_apertura,
 Llave_cierre, Corchete_apertura, Corchete_cierre, Comillas, Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico,
-Op_Booleano, Identificador, Numero, Linea, ERROR, Punto, Coma, Break;
+Op_Booleano, Identificador, Numero, Linea, ERROR, Punto, Coma, Break, Simb_especial;
 
-non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
+non terminal DIGPOS, LETTERUPPER, LETTERLOWER, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
 CHAR, STRING, ARRAY, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
 VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERANDOARIT, LITERAL, OPUNIARIA,
 NEGATIVO, INCR, DECR, EXPRUNARIA, RELACIONAL, RELBOOL, OPREL, OPRL, EXPRBOOL, LOGICO, OPLOG, EXPRLOG, BLOQUE, OPERACION, EXPR,
@@ -32,8 +32,7 @@ start with inicio;
 DIGPOS ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 LETTERUPPER ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
 LETTERLOWER ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
-//MARKS ::= " " | ¡ | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "," | "." | "\" | ":" | ";" | ">" | "<" | "=" | "?" | "¿" | "@" | "[" | "]" | "{" | "}";
-MARKS ::= \¡;// | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "," | "." | "\" | ":" | ";" | ">" | "<" | "=" | "?" | "¿" | "@" | "[" | "]" | "{" | "}";
+MARKS ::= Simb_especial;
 LETTER ::= LETTERUPPER | LETTERLOWER;
 DIG ::= 0 | DIGPOS;
 NUMZER ::= DIG | NUMZER DIG;

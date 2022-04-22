@@ -58,7 +58,7 @@ main {lexema = yytext(); return Main;}
 ( "&&" | "||" | "&" | "|" | "!") {lexema = yytext(); return Op_Logico;}
 (true | false) {lexema = yytext(); return Op_Booleano;}
 
-(" " | "¡" | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "," | "." | "\" | ":" | ";" | ">" | "<" | "=" | "?" | "¿" | "@" | "[" | "]" | "{" | "}" ) {lexema = yylex(); return Marks;}
+("\¡" | "\$" | "\%" | "\\" | "\:" | "\?" | "\¿" | "\@") {lexema = yytext(); return Simb_especial;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
