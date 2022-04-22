@@ -40,7 +40,7 @@ main {lexema = yytext(); return Main;}
 "#" {lexema = yytext(); return Numeral;}
 
 "=" {lexema = yytext(); return Igual;}
-"+" {lexema = yytext(); return Suma;}
+"+"{lexema = yytext(); return Suma;}
 "-" {lexema = yytext(); return Resta;}
 "/" {lexema = yytext(); return Division;}
 "*" {lexema = yytext(); return Multiplicacion;}

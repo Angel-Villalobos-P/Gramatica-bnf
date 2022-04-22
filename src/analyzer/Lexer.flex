@@ -38,8 +38,8 @@ main {lexema = yytext(); return Main;}
 "#" {lexema = yytext(); return Numeral;}
 
 "=" {lexema = yytext(); return Igual;}
-"+" {lexema = yytext(); return Suma;}
-"-" {lexema = yytext(); return Resta;}
+( "+" ) {lexema = yytext(); return Suma;}
+"\-" {lexema = yytext(); return Resta;}
 "/" {lexema = yytext(); return Division;}
 "*" {lexema = yytext(); return Multiplicacion;}
 "~" {lexema = yytext(); return Modulo;}
@@ -57,6 +57,8 @@ main {lexema = yytext(); return Main;}
 ("<" | "<=" | ">=" | ">" | "==" | "!=") {lexema = yytext(); return Op_Relacional;}
 ( "&&" | "||" | "&" | "|" | "!") {lexema = yytext(); return Op_Logico;}
 (true | false) {lexema = yytext(); return Op_Booleano;}
+
+(" " | "¡" | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "," | "." | "\" | ":" | ";" | ">" | "<" | "=" | "?" | "¿" | "@" | "[" | "]" | "{" | "}" ) {lexema = yylex(); return Marks;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}

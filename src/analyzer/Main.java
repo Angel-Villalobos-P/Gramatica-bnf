@@ -8,7 +8,7 @@ public class Main {
 
     public static void test() {
 
-        String str = "testing lexer 123";
+        String str = "+";
         File archivo = new File("file.txt");
         PrintWriter escribir;
 
@@ -39,6 +39,9 @@ public class Main {
                         break;
                     case Identificador:
                     case Numero:
+                        resultado += lexer.lexema + ": ->> Es un " + token + "\n";
+                        break;
+                    case Suma:
                         resultado += lexer.lexema + ": ->> Es un " + token + "\n";
                         break;
                     default:
