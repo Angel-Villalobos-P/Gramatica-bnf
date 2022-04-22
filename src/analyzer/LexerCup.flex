@@ -18,7 +18,6 @@ espacio=[ ,\t,\r,\n]+
 
 {espacio} {}            // Espacios en blanco
 ( "//"(.)* ) {}         // Comentario
- . {return ERROR;}      // Error de análisis
 
 int {return new Symbol(sym.Int, yychar, yyline, yytext());}
 float {return new Symbol(sym.Float, yychar, yyline, yytext());}
@@ -36,29 +35,37 @@ case {return new Symbol(sym.Case, yychar, yyline, yytext());}
 print {return new Symbol(sym.Print, yychar, yyline, yytext());}
 return {return new Symbol(sym.Return, yychar, yyline, yytext());}
 main {return new Symbol(sym.Main, yychar, yyline, yytext());}
+break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 
-"#" {return new Symbol(sym.Numeral, yychar, yyline, yytext());}
+"\#" {return new Symbol(sym.Numeral, yychar, yyline, yytext());}
 
-"=" {return new Symbol(sym.Igual, yychar, yyline, yytext());}
-"+" {return new Symbol(sym.Suma, yychar, yyline, yytext());}
-"-" {return new Symbol(sym.Resta, yychar, yyline, yytext());}
-"/" {return new Symbol(sym.Division, yychar, yyline, yytext());}
-"*" {return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
-"~" {return new Symbol(sym.Modulo, yychar, yyline, yytext());}
-"^" {return new Symbol(sym.Potencia, yychar, yyline, yytext());}
-"(" {return new Symbol(sym.Parentesis_apertura, yychar, yyline, yytext());}
-")" {return new Symbol(sym.Parentesis_cierre, yychar, yyline, yytext());}
-"{" {return new Symbol(sym.Llave_apertura, yychar, yyline, yytext());}
-"}" {return new Symbol(sym.Llave_cierre, yychar, yyline, yytext());}
-"[" {return new Symbol(sym.Corchete_apertura, yychar, yyline, yytext());}
-"]" {return new Symbol(sym.Corchete_cierre, yychar, yyline, yytext());}
+"\=" {return new Symbol(sym.Igual, yychar, yyline, yytext());}
+"\+" {return new Symbol(sym.Suma, yychar, yyline, yytext());}
+"\-" {return new Symbol(sym.Resta, yychar, yyline, yytext());}
+"\/" {return new Symbol(sym.Division, yychar, yyline, yytext());}
+"\*" {return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
+"\~" {return new Symbol(sym.Modulo, yychar, yyline, yytext());}
+"\^" {return new Symbol(sym.Potencia, yychar, yyline, yytext());}
+"\(" {return new Symbol(sym.Parentesis_apertura, yychar, yyline, yytext());}
+"\)" {return new Symbol(sym.Parentesis_cierre, yychar, yyline, yytext());}
+"\{" {return new Symbol(sym.Llave_apertura, yychar, yyline, yytext());}
+"\}" {return new Symbol(sym.Llave_cierre, yychar, yyline, yytext());}
+"\[" {return new Symbol(sym.Corchete_apertura, yychar, yyline, yytext());}
+"\]" {return new Symbol(sym.Corchete_cierre, yychar, yyline, yytext());}
 "\"" {return new Symbol(sym.Comillas, yychar, yyline, yytext());}
 
 "++" {return new Symbol(sym.Op_Incremento, yychar, yyline, yytext());}
 "--" {return new Symbol(sym.Op_Decremento, yychar, yyline, yytext());}
-("<" | "<=" | ">=" | ">" | "==" | "!=") {return new Symbol(sym.Op_Relacional, yychar, yyline, yytext());}
-( "&&" | "||" | "&" | "|" | "!") {return new Symbol(sym.Op_Logico, yychar, yyline, yytext());}
+("\<" | "<=" | ">=" | "\>" | "==" | "!=") {return new Symbol(sym.Op_Relacional, yychar, yyline, yytext());}
+("&&" | "||" | "\&" | "\|" | "\!") {return new Symbol(sym.Op_Logico, yychar, yyline, yytext());}
 (true | false) {return new Symbol(sym.Op_Booleano, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 ("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
+ . {return ERROR;}      // Error de análisis
+
+
+
+
+
+
