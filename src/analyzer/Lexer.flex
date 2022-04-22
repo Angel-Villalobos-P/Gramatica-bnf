@@ -16,7 +16,6 @@ espacio=[ ,\t,\r]+
 {espacio} {}            // Espacios en blanco
 ( "//"(.)* ) {}         // Comentario
 "\n" {return Linea;}    // Salto de linea
- . {return ERROR;}      // Error de análisis
 
 int {lexema = yytext(); return Int;}
 float {lexema = yytext(); return Float;}
@@ -35,30 +34,31 @@ print {lexema = yytext(); return Print;}
 return {lexema = yytext(); return Return;}
 main {lexema = yytext(); return Main;}
 
-"#" {lexema = yytext(); return Numeral;}
+"\#" {lexema = yytext(); return Numeral;}
 
-"=" {lexema = yytext(); return Igual;}
-"+" {lexema = yytext(); return Suma;}
-"-" {lexema = yytext(); return Resta;}
-"/" {lexema = yytext(); return Division;}
-"*" {lexema = yytext(); return Multiplicacion;}
-"~" {lexema = yytext(); return Modulo;}
-"^" {lexema = yytext(); return Potencia;}
-"(" {lexema = yytext(); return Parentesis_apertura;}
-")" {lexema = yytext(); return Parentesis_cierre;}
-"{" {lexema = yytext(); return Llave_apertura;}
-"}" {lexema = yytext(); return Llave_cierre;}
-"[" {lexema = yytext(); return Corchete_apertura;}
-"]" {lexema = yytext(); return Corchete_cierre;}
+"\=" {lexema = yytext(); return Igual;}
+"\+" {lexema = yytext(); return Suma;}
+"\-" {lexema = yytext(); return Resta;}
+"\/" {lexema = yytext(); return Division;}
+"\*" {lexema = yytext(); return Multiplicacion;}
+"\~" {lexema = yytext(); return Modulo;}
+"\^" {lexema = yytext(); return Potencia;}
+"\(" {lexema = yytext(); return Parentesis_apertura;}
+"\)" {lexema = yytext(); return Parentesis_cierre;}
+"\{" {lexema = yytext(); return Llave_apertura;}
+"\}" {lexema = yytext(); return Llave_cierre;}
+"\[" {lexema = yytext(); return Corchete_apertura;}
+"\]" {lexema = yytext(); return Corchete_cierre;}
 "\"" {lexema = yytext(); return Comillas;}
 
 "++" {lexema = yytext(); return Op_Incremento;}
 "--" {lexema = yytext(); return Op_Decremento;}
-("<" | "<=" | ">=" | ">" | "==" | "!=") {lexema = yytext(); return Op_Relacional;}
-( "&&" | "||" | "&" | "|" | "!") {lexema = yytext(); return Op_Logico;}
+("\<" | "<=" | ">=" | "\>" | "==" | "!=") {lexema = yytext(); return Op_Relacional;}
+( "&&" | "||" | "\&" | "\|" | "\!") {lexema = yytext(); return Op_Logico;}
 (true | false) {lexema = yytext(); return Op_Booleano;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
+ . {return ERROR;}      // Error de análisis
 
 

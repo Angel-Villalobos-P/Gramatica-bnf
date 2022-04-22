@@ -20,45 +20,45 @@ espacio=[ ,\t,\r,\n]+
 ( "//"(.)* ) {}         // Comentario
  . {return ERROR;}      // Error de análisis
 
-int {lexema = yytext(); return Int;}
-float {lexema = yytext(); return Float;}
-bool {lexema = yytext(); return Bool;}
-char {lexema = yytext(); return Char;}
-string {lexema = yytext(); return String;}
-array {lexema = yytext(); return Array;}
-null {lexema = yytext(); return Null;}
+int {return new Symbol(sym.Int, yychar, yyline, yytext());}
+float {return new Symbol(sym.Float, yychar, yyline, yytext());}
+bool {return new Symbol(sym.Bool, yychar, yyline, yytext());}
+char {return new Symbol(sym.Char, yychar, yyline, yytext());}
+string {return new Symbol(sym.String, yychar, yyline, yytext());}
+array {return new Symbol(sym.Array, yychar, yyline, yytext());}
+null {return new Symbol(sym.Null, yychar, yyline, yytext());}
 
-if {lexema = yytext(); return If;}
-else {lexema = yytext(); return Else;}
-while {lexema = yytext(); return While;}
-switch {lexema = yytext(); return Switch;}
-case {lexema = yytext(); return Case;}
-print {lexema = yytext(); return Print;}
-return {lexema = yytext(); return Return;}
-main {lexema = yytext(); return Main;}
+if {return new Symbol(sym.If, yychar, yyline, yytext());}
+else {return new Symbol(sym.Else, yychar, yyline, yytext());}
+while {return new Symbol(sym.While, yychar, yyline, yytext());}
+switch {return new Symbol(sym.Switch, yychar, yyline, yytext());}
+case {return new Symbol(sym.Case, yychar, yyline, yytext());}
+print {return new Symbol(sym.Print, yychar, yyline, yytext());}
+return {return new Symbol(sym.Return, yychar, yyline, yytext());}
+main {return new Symbol(sym.Main, yychar, yyline, yytext());}
 
-"#" {lexema = yytext(); return Numeral;}
+"#" {return new Symbol(sym.Numeral, yychar, yyline, yytext());}
 
-"=" {lexema = yytext(); return Igual;}
-"+" {lexema = yytext(); return Suma;}
-"-" {lexema = yytext(); return Resta;}
-"/" {lexema = yytext(); return Division;}
-"*" {lexema = yytext(); return Multiplicacion;}
-"~" {lexema = yytext(); return Modulo;}
-"^" {lexema = yytext(); return Potencia;}
-"(" {lexema = yytext(); return Parentesis_apertura;}
-")" {lexema = yytext(); return Parentesis_cierre;}
-"{" {lexema = yytext(); return Llave_apertura;}
-"}" {lexema = yytext(); return Llave_cierre;}
-"[" {lexema = yytext(); return Corchete_apertura;}
-"]" {lexema = yytext(); return Corchete_cierre;}
-"\"" {lexema = yytext(); return Comillas;}
+"=" {return new Symbol(sym.Igual, yychar, yyline, yytext());}
+"+" {return new Symbol(sym.Suma, yychar, yyline, yytext());}
+"-" {return new Symbol(sym.Resta, yychar, yyline, yytext());}
+"/" {return new Symbol(sym.Division, yychar, yyline, yytext());}
+"*" {return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
+"~" {return new Symbol(sym.Modulo, yychar, yyline, yytext());}
+"^" {return new Symbol(sym.Potencia, yychar, yyline, yytext());}
+"(" {return new Symbol(sym.Parentesis_apertura, yychar, yyline, yytext());}
+")" {return new Symbol(sym.Parentesis_cierre, yychar, yyline, yytext());}
+"{" {return new Symbol(sym.Llave_apertura, yychar, yyline, yytext());}
+"}" {return new Symbol(sym.Llave_cierre, yychar, yyline, yytext());}
+"[" {return new Symbol(sym.Corchete_apertura, yychar, yyline, yytext());}
+"]" {return new Symbol(sym.Corchete_cierre, yychar, yyline, yytext());}
+"\"" {return new Symbol(sym.Comillas, yychar, yyline, yytext());}
 
-"++" {lexema = yytext(); return Op_Incremento;}
-"--" {lexema = yytext(); return Op_Decremento;}
-("<" | "<=" | ">=" | ">" | "==" | "!=") {lexema = yytext(); return Op_Relacional;}
-( "&&" | "||" | "&" | "|" | "!") {lexema = yytext(); return Op_Logico;}
-(true | false) {lexema = yytext(); return Op_Booleano;}
+"++" {return new Symbol(sym.Op_Incremento, yychar, yyline, yytext());}
+"--" {return new Symbol(sym.Op_Decremento, yychar, yyline, yytext());}
+("<" | "<=" | ">=" | ">" | "==" | "!=") {return new Symbol(sym.Op_Relacional, yychar, yyline, yytext());}
+( "&&" | "||" | "&" | "|" | "!") {return new Symbol(sym.Op_Logico, yychar, yyline, yytext());}
+(true | false) {return new Symbol(sym.Op_Booleano, yychar, yyline, yytext());}
 
-{L}({L}|{D})* {lexema = yytext(); return Identificador;}
-("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
+{L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
+("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
