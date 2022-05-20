@@ -58,6 +58,8 @@ break {lexema = yytext(); return Break;}
 ( "&&" | "||" | "\&" | "\|" | "\!") {lexema = yytext(); return Op_Logico;}
 (true | false) {lexema = yytext(); return Op_Booleano;}
 
+("\¡" | "\$" | "\%" | "\\" | "\:" | "\?" | "\¿" | "\@") {lexema = yytext(); return Simb_especial;}
+
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
  . {return ERROR;}      // Error de análisis

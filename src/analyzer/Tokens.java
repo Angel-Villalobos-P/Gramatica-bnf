@@ -30,6 +30,7 @@ public enum Tokens {
     Llave_cierre,
     Corchete_apertura,
     Corchete_cierre,
+    Simb_especial,
     Comillas,
     Op_Incremento,
     Op_Decremento,

@@ -60,18 +60,18 @@ public class MainFrm extends javax.swing.JFrame{
         btn_sintactico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*String ST = txt_file.getText();
-                Sintax s = new Sintax(new analyzer.LexerCup(new StringReader(ST)));
-
-                try {
-                    s.parse();
-                    txt_sintactico.setText("Analisis realizado correctamente");
-                    txt_sintactico.setForeground(new Color(25, 111, 61));
-                } catch (Exception ex) {
-                    Symbol sym = s.getS();
-                    txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
-                    txt_sintactico.setForeground(Color.red);
-                }*/
+//                String ST = txt_file.getText();
+//                Sintax s = new Sintax(new analyzer.LexerCup(new StringReader(ST)));
+//
+//                try {
+//                    s.parse();
+//                    txt_sintactico.setText("Analisis realizado correctamente");
+//                    txt_sintactico.setForeground(new Color(25, 111, 61));
+//                } catch (Exception ex) {
+//                    Symbol sym = s.getS();
+//                    txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+//                    txt_sintactico.setForeground(Color.red);
+//                }
             }
         });
         limpiarButton.addActionListener(new ActionListener() {
