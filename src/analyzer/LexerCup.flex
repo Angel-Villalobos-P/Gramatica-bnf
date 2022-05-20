@@ -63,4 +63,4 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 ("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
-. {return ERROR;}      // Error de análisis
+ . {return ERROR;}      // Error de análisis
