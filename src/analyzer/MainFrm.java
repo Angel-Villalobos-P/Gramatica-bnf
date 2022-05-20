@@ -20,8 +20,13 @@ import java.util.logging.Logger;
 
 public class MainFrm extends javax.swing.JFrame {
 
+    DefaultTableModel model;
 
-    public MainFrm() {
+    public MainFrm(){
+
+        model = (DefaultTableModel) table1.getModel();
+        model.addColumn("Símbolos");
+        model.addColumn("Línea");
 
         btn_file.addActionListener(new ActionListener() {
             @Override
@@ -82,6 +87,16 @@ public class MainFrm extends javax.swing.JFrame {
             if (token == null) {
                 return;
             }
+        });
+        limpiarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txt_file.setText(null);
+                txt_sintactico.setText(null);
+                model.setRowCount(0);
+            }
+        });
+    }
             switch (token) {
 
                 case Linea:
@@ -280,10 +295,13 @@ public class MainFrm extends javax.swing.JFrame {
         });*/
         JFrame frm = new JFrame();
         frm.setContentPane(new MainFrm().panel);
-        frm.setLocationRelativeTo(null);
-        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frm.pack();
+        frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setVisible(true);
+//        frm.setLocationRelativeTo(null);
+//        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frm.pack();
+
+
     }
 
     private JTextArea txt_sintactico;
@@ -293,5 +311,8 @@ public class MainFrm extends javax.swing.JFrame {
     private JTextArea txt_file;
     private JButton btn_sintactico;
     private JTable table1;
-    private JScrollBar scrollBar1;
+    private JButton limpiarButton;
+    private JPanel panel2;
+    private JPanel panel1;
+    private JPanel panel3;
 }
