@@ -103,63 +103,75 @@ public class MainFrm extends javax.swing.JFrame{
                         break;
                     case Int:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Entero>"});
-                        
+
                         break;
                     case Float:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Flotante>"});
-                        
+
                         break;
                     case Bool:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Booleano>"});
-                        
+
                         break;
                     case Char:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Caracter>"});
-                        
+
                         break;
                     case String:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato String>"});
-                        
                         break;
+
+                    case String_literal:
+                        model.addRow(new Object[]{lexer.lexema, "<String literal>"});
+                        break;
+
                     case Array:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Arreglo>"});
-                        
+
                         break;
                     case Null:
                         model.addRow(new Object[]{lexer.lexema, "<Tipo de dato Nulo>"});
-                        
+
                         break;
                     case If:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada If>"});
-                        
+
                         break;
                     case Else:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Else>"});
-                        
+
                         break;
                     case While:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada While>"});
-                        
+
                         break;
                     case Switch:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Switch>"});
-                        
+
                         break;
                     case Case:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Case>"});
-                        
+
                         break;
                     case Print:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Print>"});
-                        
+
+                        break;
+                    case Default:
+                        model.addRow(new Object[]{lexer.lexema, "<Reservada Default>"});
+
+                        break;
+                    case Read:
+                        model.addRow(new Object[]{lexer.lexema, "<Reservada Read>"});
+
                         break;
                     case Return:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Return>"});
-                        
+
                         break;
                     case Main:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Main>"});
-                        
+
                         break;
                     case Break:
                         model.addRow(new Object[]{lexer.lexema, "<Reservada Break>"});
@@ -167,99 +179,105 @@ public class MainFrm extends javax.swing.JFrame{
                         break;
                     case Numeral:
                         model.addRow(new Object[]{lexer.lexema, "<Numeral>"});
-                        
+
                         break;
                     case Igual:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Igual>"});
-                        
+
                         break;
                     case Suma:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Suma>"});
-                        
+
                         break;
                     case Resta:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Resta>"});
-                        
+
                         break;
                     case Division:
                         model.addRow(new Object[]{lexer.lexema, "<Operador División>"});
-                        
+
                         break;
                     case Multiplicacion:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Multiplicación>"});
-                        
+
                         break;
                     case Modulo:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Módulo>"});
-                        
+
                         break;
                     case Potencia:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Potencia>"});
-                        
+
                         break;
                     case Parentesis_apertura:
                         model.addRow(new Object[]{lexer.lexema, "<Parentesis de apertura>"});
-                        
+
                         break;
                     case Parentesis_cierre:
                         model.addRow(new Object[]{lexer.lexema, "<Parentesis de cierre>"});
-                        
+
                         break;
                     case Llave_apertura:
                         model.addRow(new Object[]{lexer.lexema, "<Llave de apertura>"});
-                        
+
                         break;
                     case Llave_cierre:
                         model.addRow(new Object[]{lexer.lexema, "<Llave de cierre>"});
-                        
+
                         break;
                     case Corchete_apertura:
                         model.addRow(new Object[]{lexer.lexema, "<Corchete de apertura>"});
-                        
+
                         break;
                     case Corchete_cierre:
                         model.addRow(new Object[]{lexer.lexema, "<Corchete de cierre>"});
-                        
+
                         break;
                     case Comillas:
                         model.addRow(new Object[]{lexer.lexema, "<Comillas>"});
-                        
+
+                        break;
+                    case Comilla_simple:
+                        model.addRow(new Object[]{lexer.lexema, "<Comilla_Simple>"});
+
                         break;
                     case Op_Incremento:
                         model.addRow(new Object[]{lexer.lexema, "<Operador de incremento>"});
-                        
+
                         break;
                     case Op_Decremento:
                         model.addRow(new Object[]{lexer.lexema, "<Operador de decremento>"});
-                        
+
                         break;
                     case Op_Relacional:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Relacional>"});
-                        
+
                         break;
                     case Op_Logico:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Lógico>"});
-                        
+
                         break;
                     case Op_Booleano:
                         model.addRow(new Object[]{lexer.lexema, "<Operador Booleano>"});
-                        
+
                         break;
                     case Identificador:
                         model.addRow(new Object[]{lexer.lexema, "<Identificador>"});
-                        
+
                         break;
                     case Numero:
                         model.addRow(new Object[]{lexer.lexema, "<Numero>"});
-                        
+                        break;
+                    case Simb_especial:
+                        model.addRow(new Object[]{lexer.lexema, "<Simbolo especial>"});
                         break;
                     case ERROR:
                         model.addRow(new Object[]{lexer.lexema, "<Símbolo no encontrado>"});
-                        
+
                         break;
                     default:
                         model.addRow(new Object[]{lexer.lexema, "<Símbolo no definido>"});
-                        
+
                         break;
                 }
             }
