@@ -63,13 +63,18 @@ public class Main {
 //        }
 //    }
 
+    /*
+    Add this to lexer.flex:
+    package analyzer;
+    import static analyzer.Tokens.*;
+     */
 
     public static void main(String[] args) throws Exception {
         System.out.println("--- generar lexer ---");
 
         String ruta = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
-        String ruta1 ="C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
-        generarLexer(ruta1);
+//        String ruta1 ="C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
+        generarLexer(ruta);
 
         System.out.println("--- lexer generado ---");
 

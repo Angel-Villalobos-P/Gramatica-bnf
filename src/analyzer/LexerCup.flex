@@ -53,6 +53,7 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 "\[" {return new Symbol(sym.Corchete_apertura, yychar, yyline, yytext());}
 "\]" {return new Symbol(sym.Corchete_cierre, yychar, yyline, yytext());}
 "\"" {return new Symbol(sym.Comillas, yychar, yyline, yytext());}
+"\'" {return new Symbol(sym.Comilla_simple, yychar, yyline, yytext());}
 
 "++" {return new Symbol(sym.Op_Incremento, yychar, yyline, yytext());}
 "--" {return new Symbol(sym.Op_Decremento, yychar, yyline, yytext());}
@@ -62,4 +63,4 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 ("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
- . {return ERROR;}      // Error de análisis
+. {return ERROR;}      // Error de análisis
