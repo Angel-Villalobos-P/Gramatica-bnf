@@ -28,13 +28,16 @@ EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT
 COMENTARIO;
 
 start with INICIO;
-DIGPOS ::= Numero;
-LETTERUPPER ::= Char;
-LETTERLOWER ::= Char;
+//DIGPOS ::= Numero;
+//LETTERUPPER ::= Char;
+//LETTERLOWER ::= Char;
 
-//DIGPOS ::=  1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-//LETTERUPPER ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
-//LETTERLOWER ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
+
+
+
+DIGPOS ::=  1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+LETTERUPPER ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
+LETTERLOWER ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
 MARKS ::= Simb_especial;
 LETTER ::= LETTERUPPER | LETTERLOWER;
 DIG ::= 0 | DIGPOS;

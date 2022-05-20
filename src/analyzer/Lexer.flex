@@ -5,10 +5,11 @@ import static Tokens.*;
 %class Lexer
 %type Tokens
 L=[a-zA-Z_]+
-D=[0-9]+
+D=[+-]?[0-9]+
 espacio=[ ,\t,\r]+
-F=[+-]?([0-9]*[.])?[0-9]+
-S=\"[a-zA-Z_ ]+\"
+F=[-+]?[0-9]*\.[0-9]+
+S=\"[a-zA-Z_ ]*.+\"
+C=\'.\'
 
 %{
     public String lexema;
@@ -67,9 +68,11 @@ break {lexema = yytext(); return Break;}
 ("\¡" | "\$" | "\%" | "\\" | "\:" | "\?" | "\¿" | "\@") {lexema = yytext(); return Simb_especial;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
-("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
+/*("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}*/
+{D} {lexema = yytext(); return Numero;}
 {F} {lexema = yytext(); return Tokens.Float;}
 {S} {lexema = yytext(); return Tokens.String_literal;}
+{C} {lexema = yytext(); return Tokens.Char_literal;}
 . {return ERROR;}      // Error de análisis
 
 

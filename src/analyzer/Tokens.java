@@ -7,6 +7,7 @@ public enum Tokens {
     Char,
     String,
     String_literal,
+    Char_literal,
     Array,
     Null,
     If,
