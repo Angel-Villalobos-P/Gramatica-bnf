@@ -1,4 +1,5 @@
-import analyzer.Tokens;import static Tokens.*;
+import analyzer.Tokens;
+import static Tokens.*;
 
 %%
 %class Lexer
@@ -6,6 +7,8 @@ import analyzer.Tokens;import static Tokens.*;
 L=[a-zA-Z_]+
 D=[0-9]+
 espacio=[ ,\t,\r]+
+F=[+-]?([0-9]*[.])?[0-9]+
+S=\"[a-zA-Z_ ]+\"
 
 %{
     public String lexema;
@@ -31,6 +34,8 @@ while {lexema = yytext(); return While;}
 switch {lexema = yytext(); return Switch;}
 case {lexema = yytext(); return Case;}
 print {lexema = yytext(); return Print;}
+default {lexema = yytext(); return Default;}
+read {lexema = yytext(); return Read;}
 return {lexema = yytext(); return Return;}
 main {lexema = yytext(); return Main;}
 break {lexema = yytext(); return Break;}
@@ -51,6 +56,7 @@ break {lexema = yytext(); return Break;}
 "\[" {lexema = yytext(); return Corchete_apertura;}
 "\]" {lexema = yytext(); return Corchete_cierre;}
 "\"" {lexema = yytext(); return Comillas;}
+"\'" {lexema = yytext(); return Comilla_simple;}
 
 "++" {lexema = yytext(); return Op_Incremento;}
 "--" {lexema = yytext(); return Op_Decremento;}
@@ -62,6 +68,8 @@ break {lexema = yytext(); return Break;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}
- . {return ERROR;}      // Error de análisis
+{F} {lexema = yytext(); return Tokens.Float;}
+{S} {lexema = yytext(); return Tokens.String_literal;}
+. {return ERROR;}      // Error de análisis
 
 

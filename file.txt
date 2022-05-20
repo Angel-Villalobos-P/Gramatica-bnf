@@ -1,1 +1,5 @@
-testing lexer 123 + -
+int main {
+var x = 5;
+var y = 5;
+var suma = x + y;
+}
