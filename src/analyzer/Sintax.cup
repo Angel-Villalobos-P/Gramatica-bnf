@@ -15,11 +15,70 @@ parser code
 }
 :};
 
-terminal  Int, Float, Bool, Char, String, Array, Null, If, Else, While, Switch, Case, Print, Return, Main, Numeral,
-Igual, Suma, Resta, Division, Multiplicacion, Modulo, Potencia, Parentesis_apertura, Parentesis_cierre, Llave_apertura,
-Llave_cierre, Corchete_apertura, Corchete_cierre, Comillas, Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico,
-Op_Booleano, Identificador, Numero, Linea, ERROR, Punto, Coma, Break, Simb_especial;
+terminal  Int, Float, Bool, Char, Char_literal, String, String_literal, Array, Null, If, Else, While, Switch, Case, Print,
+Default, Read, Return, Main, Numeral, Igual, Suma, Resta, Division, Multiplicacion, Modulo, Potencia, Parentesis_apertura,
+Parentesis_cierre, Llave_apertura, Llave_cierre, Corchete_apertura, Corchete_cierre, Comillas, Comilla_simple,
+Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico, Op_Booleano, Identificador, Numero, Linea, ERROR, Punto, Coma,
+Break, Simb_especial, True, False;
 
+non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
+CHAR, STRING, ARRAY, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
+VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERANDOARIT, LITERAL, OPUNIARIA,
+NEGATIVO, INCR, DECR, EXPRUNARIA, RELACIONAL, RELBOOL, OPREL, OPRL, EXPRBOOL, LOGICO, OPLOG, EXPRLOG, BLOQUE, OPERACION, EXPR,
+EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT, PRINT, FUNC, FUNCS, FUNCRETURN, INICIO, MAIN,
+COMENTARIO, TIPOASIG;
+
+start with INICIO;
+
+INICIO ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+
+BLOQUE ::= EXPR | EXPR BLOQUE;
+EXPR ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS;
+VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
+CREACION ::= TIPO Identificador Numeral; // e.g: int x#
+CREAASIG ::= TIPO Identificador Igual TIPOASIG Numeral; // e.g: int x = 4#
+ASIGNAR ::= Identificador Igual TIPOASIG Numeral; // e.g: x = y#
+TIPO ::= Int | Bool | Float | Char | String;
+TIPOASIG ::= Numero |  Float | String_literal | Char_literal | Identificador | BOOL | OP;
+BOOL ::= True | False;
+
+//OPERACION ::= OP | COMB; // <---- COMB
+//OP ::= OPARITM | OPUNIARIA | OPREL | OPLOG;
+//
+//OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT;
+//OPARITM ::= OPARITM Numeral;
+//OPERANDOARIT ::= OPERANDO | OPARITM; //| FUNCS; // | FUNCS;
+//OPERANDO ::= Identificador | Numero | Float;
+//ARITMETICO ::= Suma | Resta | Division | Multiplicacion | Modulo | Potencia;
+//
+//OPUNIARIA ::= INCR | DECR;
+//OPUNIARIA ::= OPUNIARIA Numeral;
+//
+//INCR ::= OPERANDO Op_Incremento;
+//INCR ::= Op_Incremento OPERANDO;
+//
+//DECR ::= OPERANDO Op_Decremento;
+//DECR ::= Op_Decremento OPERANDO;
+//
+//OPREL ::= OPERANDO Op_Relacional OPERANDO;
+//OPREL ::= OPREL Numeral;
+//
+//OPLOG ::= EXPRLOG Op_Logico EXPRLOG;
+//OPLOG ::= Op_Logico EXPRLOG;
+//OPLOG ::= OPLOG Numeral;
+//EXPRLOG ::= Identificador | BOOL | OPLOG;// | FUNCS;
+
+//COMB ::= OP | ARITMETICO OPERANDOARIT;
+
+
+//COMB ::= OP | ARITMETICO Parentesis_apertura OPERANDOARIT | OPARITM Parentesis_cierre OP;
+//COMB ::= OP | OPUNIARIA OP;
+//COMB ::= OP | Parentesis_apertura RELACIONAL | RELBOOL Parentesis_cierre Parentesis_apertura OPERANDO | OPREL Parentesis_cierre OP;
+//COMB ::= OP | RELBOOL Parentesis_apertura EXPRBOOL | OPREL Parentesis_cierre OP;
+//COMB ::= OP | LOGICO Parentesis_apertura EXPRLOG | OPLOG Parentesis_cierre OP;
+//COMB ::= COMB Numeral;
+
+/*
 non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
 CHAR, STRING, ARRAY, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
 VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERANDOARIT, LITERAL, OPUNIARIA,
@@ -31,10 +90,12 @@ start with INICIO;
 //DIGPOS ::= Numero;
 //LETTERUPPER ::= Char;
 //LETTERLOWER ::= Char;
+*/
 
 
 
 
+/*
 DIGPOS ::=  1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 LETTERUPPER ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
 LETTERLOWER ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
@@ -137,7 +198,7 @@ MAIN ::= INT MAIN Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Ll
 
 COMENTARIO ::= Division Division BLOQUE;
 COMENTARIO ::= Multiplicacion Parentesis_apertura INICIO | BLOQUE Parentesis_cierre Multiplicacion;
-
+*/
 
 
 
