@@ -70,22 +70,19 @@ public class Main {
      */
 
     public static void main(String[] args) throws Exception {
-        System.out.println("--- generar lexer ---");
+//        System.out.println("--- generar lexer ---");
+//
+//        String ruta = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
+////        String ruta1 ="C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
+//        generarLexer(ruta);
+//        System.out.println("--- lexer generado ---");
+//
 
-        String ruta = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
-//        String ruta1 ="C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
-        generarLexer(ruta);
-
-        System.out.println("--- lexer generado ---");
-
-//        System.out.println("===TESTING===");
-//        test();
-
-        //Generar todo
-//        String ruta1 = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
-//        String ruta2 = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
-//        String[] rutaS = {"-parser", "Sintax", "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.cup"};
-//        generar(ruta1, ruta2, rutaS);
+        //Generar todos
+        String lexer_Path = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
+        String lexerCup_path = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/LexerCup.flex";
+        String[] sintax_path = {"-parser", "Sintax", "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.cup"};
+        generar(lexer_Path, lexerCup_path, sintax_path);
     }
 
     public static void generarLexer(String ruta) {
@@ -93,7 +90,7 @@ public class Main {
         JFlex.Main.generate(archivo);
     }
 
-    public static void generar(String ruta1, String ruta2, String[] rutaS) throws IOException, Exception{
+    public static void generar(String ruta1, String ruta2, String[] rutaS) throws IOException, Exception {
         File archivo;
         archivo = new File(ruta1);
         JFlex.Main.generate(archivo);
@@ -101,21 +98,22 @@ public class Main {
         JFlex.Main.generate(archivo);
         java_cup.Main.main(rutaS);
 
-//        Path rutaSym = Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/AnalizadorLexico/src/codigo/codigo/sym.java");
+        // Verifica si ya existe el file sym, para eliminarlo y mover el otro recién generado
         Path rutaSym = Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/sym.java");
         if (Files.exists(rutaSym)) {
             Files.delete(rutaSym);
         }
         Files.move(
-                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/sym.java"),
+                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/sym.java"),
                 Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/sym.java")
         );
+        // Verifica si ya existe el file sintax, para eliminarlo y mover el otro recién generado
         Path rutaSin = Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.java");
         if (Files.exists(rutaSin)) {
             Files.delete(rutaSin);
         }
         Files.move(
-                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/Sintax.java "),
+                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/Sintax.java"),
                 Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.java")
         );
     }

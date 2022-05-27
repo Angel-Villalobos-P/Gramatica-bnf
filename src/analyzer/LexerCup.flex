@@ -1,13 +1,15 @@
 import java_cup.runtime.Symbol;
 
 %%
-%class LecerCup
+%class LexerCup
 %type java_cup.runtime.Symbol
+%cup
 L=[a-zA-Z_]+
-D=[0-9]+
+D=[+-]?[0-9]+
 espacio=[ ,\t,\r,\n]+
 F=[+-]?([0-9]*[.])?[0-9]+
 S=\"[a-zA-Z_ ]+\"
+C=\'.\'
 %{
     private Symbol simbolo(int tipo, Object valor){
       return new Symbol(tipo, yyline, yycolumn, valor);
@@ -67,6 +69,7 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 {F} {return new Symbol(sym.Float, yychar, yyline, yytext());}
-{S} {return new Symbol(sym.Float, yychar, yyline, yytext());}
-("(-"{D}+")")|{D}+ {return new Symbol(sym.String_literal, yychar, yyline, yytext());}
- . {return ERROR;}      // Error de análisis
+{S} {return new Symbol(sym.String_literal, yychar, yyline, yytext());}
+{C} {return new Symbol(sym.Char_literal, yychar, yyline, yytext());}
+/*("(-"{D}+")")|{D}+ {return new Symbol(sym.String_literal, yychar, yyline, yytext());}*/
+ . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}

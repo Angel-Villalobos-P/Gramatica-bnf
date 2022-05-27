@@ -1,6 +1,9 @@
 package analyzer;
 
+import java_cup.runtime.DefaultSymbolFactory;
+import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
+import java_cup.runtime.SymbolFactory;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,10 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,18 +58,18 @@ public class MainFrm extends javax.swing.JFrame {
         btn_sintactico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                String ST = txt_file.getText();
-//                Sintax s = new Sintax(new analyzer.LexerCup(new StringReader(ST)));
-//
-//                try {
-//                    s.parse();
-//                    txt_sintactico.setText("Analisis realizado correctamente");
-//                    txt_sintactico.setForeground(new Color(25, 111, 61));
-//                } catch (Exception ex) {
-//                    Symbol sym = s.getS();
-//                    txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
-//                    txt_sintactico.setForeground(Color.red);
-//                }
+                String ST = txt_file.getText();
+                Sintax s = new Sintax(new analyzer.LexerCup(new StringReader(ST)));
+
+                try {
+                    s.parse();
+                    txt_sintactico.setText("Analisis realizado correctamente");
+                    txt_sintactico.setForeground(new Color(25, 111, 61));
+                } catch (Exception ex) {
+                    Symbol sym = s.getS();
+                    txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+                    txt_sintactico.setForeground(Color.red);
+                }
             }
         });
         limpiarButton.addActionListener(new ActionListener() {
