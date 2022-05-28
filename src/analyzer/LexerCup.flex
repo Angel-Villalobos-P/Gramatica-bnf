@@ -1,3 +1,4 @@
+package analyzer;
 import java_cup.runtime.Symbol;
 
 %%
@@ -66,6 +67,7 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 ("\<" | "<=" | ">=" | "\>" | "==" | "!=") {return new Symbol(sym.Op_Relacional, yychar, yyline, yytext());}
 ("&&" | "||" | "\&" | "\|" | "\!") {return new Symbol(sym.Op_Logico, yychar, yyline, yytext());}
 (true | false) {return new Symbol(sym.Op_Booleano, yychar, yyline, yytext());}
+("\¡" | "\$" | "\%" | "\\" | "\:" | "\?" | "\¿" | "\@") {return new Symbol(sym.Simb_especial, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 {F} {return new Symbol(sym.Float, yychar, yyline, yytext());}

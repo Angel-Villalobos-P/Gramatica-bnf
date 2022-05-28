@@ -77,7 +77,14 @@ public class MainFrm extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 txt_file.setText(null);
                 txt_sintactico.setText(null);
+                txt_semantico.setText(null);
                 model.setRowCount(0);
+            }
+        });
+        btn_semantico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Análisis semántico
             }
         });
     }
@@ -316,4 +323,6 @@ public class MainFrm extends javax.swing.JFrame {
     private JPanel panel2;
     private JPanel panel1;
     private JPanel panel3;
+    private JTextArea txt_semantico;
+    private JButton btn_semantico;
 }

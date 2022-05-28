@@ -1,5 +1,5 @@
-import analyzer.Tokens;
-import static Tokens.*;
+package analyzer;
+import static analyzer.Tokens.*;
 
 %%
 %class Lexer

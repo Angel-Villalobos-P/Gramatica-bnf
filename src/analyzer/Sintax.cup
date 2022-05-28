@@ -22,77 +22,104 @@ Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico, Op_Booleano, Identificad
 Break, Simb_especial, True, False;
 
 non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
-CHAR, STRING, ARRAY, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
+CHAR, STRING, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
 VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERANDOARIT, LITERAL, OPUNIARIA,
 NEGATIVO, INCR, DECR, EXPRUNARIA, RELACIONAL, RELBOOL, OPREL, OPRL, EXPRBOOL, LOGICO, OPLOG, EXPRLOG, BLOQUE, OPERACION, EXPR,
-EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT, PRINT, FUNC, FUNCS, FUNCRETURN, INICIO, MAIN,
-COMENTARIO, TIPOASIG;
+EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT, PRINT, FUNC, FUNCS, INICIO, MAIN,
+COMENTARIO, TIPOASIG, EXPRCOM, CASEOPTION, RETURN, USEFUNC, ARRAY, CREAARRAY, ASIGNARARRAY, VAL_ARRAY;
 
 start with INICIO;
 
-INICIO ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+INICIO ::= MAIN | MAIN FUNCS;
+MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura Llave_cierre;
 
-BLOQUE ::= EXPR | EXPR BLOQUE;
-EXPR ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS;
+BLOQUE ::= EXPR | BLOQUE EXPR;
+EXPR ::= VARIABLE | VAL_ARRAY | OPERACION | ESTRUCTURA | RETURN | USEFUNC | FUNCPRINT;
 VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
 CREACION ::= TIPO Identificador Numeral; // e.g: int x#
 CREAASIG ::= TIPO Identificador Igual TIPOASIG Numeral; // e.g: int x = 4#
 ASIGNAR ::= Identificador Igual TIPOASIG Numeral; // e.g: x = y#
 TIPO ::= Int | Bool | Float | Char | String;
-TIPOASIG ::= Numero |  Float | String_literal | Char_literal | Identificador | BOOL | OP;
+TIPOASIG ::= Numero | Float | String_literal | Char_literal | Identificador | ARRAY | BOOL | OPERACION | USEFUNC;
 BOOL ::= True | False;
 
-//OPERACION ::= OP | COMB; // <---- COMB
-//OP ::= OPARITM | OPUNIARIA | OPREL | OPLOG;
-//
-//OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT;
-//OPARITM ::= OPARITM Numeral;
-//OPERANDOARIT ::= OPERANDO | OPARITM; //| FUNCS; // | FUNCS;
-//OPERANDO ::= Identificador | Numero | Float;
-//ARITMETICO ::= Suma | Resta | Division | Multiplicacion | Modulo | Potencia;
-//
-//OPUNIARIA ::= INCR | DECR;
+VAL_ARRAY ::= CREAARRAY | ASIGNARARRAY;
+ARRAYTIPO ::= Identificador | Numero;
+ARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre;
+CREAARRAY ::= ARRAYTIPO Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Numeral;
+ASIGNARARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Igual TIPOASIG Numeral;
+
+OPERACION ::= OP | COMB | Parentesis_apertura OPERACION Parentesis_cierre; // Combinacion de operaciones
+OP ::= OPARITM | OPUNIARIA | OPREL | OPLOG;
+
+OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT;
+OPERANDOARIT ::= OPERANDO; //| USEFUNC;
+OPERANDO ::= Identificador | Numero | Float;
+ARITMETICO ::= Suma | Resta | Division | Multiplicacion | Modulo | Potencia;
+
+OPUNIARIA ::= INCR | DECR;
 //OPUNIARIA ::= OPUNIARIA Numeral;
-//
-//INCR ::= OPERANDO Op_Incremento;
-//INCR ::= Op_Incremento OPERANDO;
-//
-//DECR ::= OPERANDO Op_Decremento;
-//DECR ::= Op_Decremento OPERANDO;
-//
-//OPREL ::= OPERANDO Op_Relacional OPERANDO;
-//OPREL ::= OPREL Numeral;
-//
-//OPLOG ::= EXPRLOG Op_Logico EXPRLOG;
-//OPLOG ::= Op_Logico EXPRLOG;
-//OPLOG ::= OPLOG Numeral;
-//EXPRLOG ::= Identificador | BOOL | OPLOG;// | FUNCS;
 
-//COMB ::= OP | ARITMETICO OPERANDOARIT;
+INCR ::= OPERANDO Op_Incremento;
+INCR ::= Op_Incremento OPERANDO;
 
+DECR ::= OPERANDO Op_Decremento;
+DECR ::= Op_Decremento OPERANDO;
 
-//COMB ::= OP | ARITMETICO Parentesis_apertura OPERANDOARIT | OPARITM Parentesis_cierre OP;
-//COMB ::= OP | OPUNIARIA OP;
-//COMB ::= OP | Parentesis_apertura RELACIONAL | RELBOOL Parentesis_cierre Parentesis_apertura OPERANDO | OPREL Parentesis_cierre OP;
-//COMB ::= OP | RELBOOL Parentesis_apertura EXPRBOOL | OPREL Parentesis_cierre OP;
-//COMB ::= OP | LOGICO Parentesis_apertura EXPRLOG | OPLOG Parentesis_cierre OP;
-//COMB ::= COMB Numeral;
+OPREL ::= OPERANDO Op_Relacional OPERANDO;
 
-/*
-non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
-CHAR, STRING, ARRAY, NULL, ARRAYTIPO, ARRAYPARAM ,TIPO, PARAM, PARAMETRO, NEWARRAY, OPITEM, CREACION, CREAASIG, ASIGNAR,
-VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERANDOARIT, LITERAL, OPUNIARIA,
-NEGATIVO, INCR, DECR, EXPRUNARIA, RELACIONAL, RELBOOL, OPREL, OPRL, EXPRBOOL, LOGICO, OPLOG, EXPRLOG, BLOQUE, OPERACION, EXPR,
-EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT, PRINT, FUNC, FUNCS, FUNCRETURN, INICIO, MAIN,
-COMENTARIO;
+OPLOG ::= EXPRLOG Op_Logico EXPRLOG;
+OPLOG ::= Op_Logico EXPRLOG;
+EXPRLOG ::= Identificador | BOOL; // | USEFUNC;
 
-start with INICIO;
-//DIGPOS ::= Numero;
-//LETTERUPPER ::= Char;
-//LETTERLOWER ::= Char;
-*/
+COMB ::= OPERACION ARITMETICO OPERANDOARIT;
+//COMB ::= OPERACION ARITMETICO OPUNIARIA;  //     ->ERROR
+COMB ::= OPERACION Op_Relacional OPERANDO;
+//COMB ::= OPERACION Op_Logico EXPRLOG;     //     ->ERROR
 
+ESTRUCTURA ::= IF | WHILE | SWITCH;
 
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura Break Llave_cierre;
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Break Llave_cierre;
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre Else Llave_apertura BLOQUE Llave_cierre;
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre Else Llave_apertura Break Llave_cierre;
+IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre Else Llave_apertura BLOQUE Break Llave_cierre;
+
+WHILE ::= While Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+
+CASEOPTION ::= String_literal | Char_literal | OPERANDO;
+SWITCH ::= Switch Parentesis_apertura OPERANDO Parentesis_cierre Llave_apertura CASES Llave_cierre;
+CASES ::= CASE | CASES CASE;
+CASE ::= Case CASEOPTION Simb_especial BLOQUE;
+CASE ::= Case CASEOPTION Simb_especial Break Numeral;
+CASE ::= Case CASEOPTION Simb_especial BLOQUE Break Numeral;
+CASE ::= Default Simb_especial BLOQUE;
+CASE ::= Default Simb_especial Break Numeral;
+CASE ::= Default Simb_especial BLOQUE Break Numeral;
+
+FUNCS ::= FUNC | FUNCS FUNC;
+
+FUNCPRINT ::= Print Parentesis_apertura TIPOASIG Parentesis_cierre;
+
+PARAMETRO ::= Coma TIPO Identificador;
+PARAM ::= PARAMETRO | PARAM Coma PARAMETRO;
+
+FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre;
+FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre;
+FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre;
+FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura RETURN Llave_cierre;
+
+USEFUNC ::= Identificador Parentesis_apertura Parentesis_cierre;
+USEFUNC ::= Identificador Parentesis_apertura PARAM Parentesis_cierre;
+//USEFUNC ::= USEFUNC Numeral;
+
+RETURN ::= Return TIPOASIG Numeral;
+
+EXPRCOM ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS | TIPOASIG;
+COMENTARIO ::= Division Division EXPRCOM;
+COMENTARIO ::= Division Multiplicacion EXPRCOM Multiplicacion Division; //     ->ERROR
 
 
 /*
@@ -118,7 +145,9 @@ NULL ::= Null;
 ARRAYTIPO ::= INT | CHAR | ID;
 ARRAYPARAM ::= ARRAYTIPO;
 ARRAYPARAM ::= ARRAYPARAM Coma ARRAYTIPO;
+
 TIPO ::= INT| FLOAT | BOOL | CHAR | STRING;
+
 PARAM ::= TIPO ID;
 PARAMETRO ::= PARAM;
 PARAMETRO ::= PARAMETRO Coma PARAM;
@@ -126,10 +155,12 @@ NEWARRAY ::= ARRAYTIPO ID Corchete_apertura Corchete_cierre Numeral;
 NEWARRAY ::= ARRAYTIPO ID  Corchete_apertura Corchete_cierre Igual Llave_apertura ARRAYPARAM Llave_cierre Numeral;
 OPITEM ::= ID Corchete_apertura NUMPOS Corchete_cierre Numeral;
 OPITEM ::= PARAMETRO;
+
 CREACION ::= TIPO ID Numeral;
 CREAASIG ::= TIPO ID Igual EXPRVAL Numeral;
 ASIGNAR ::= ID Igual EXPRVAL Numeral;
 VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
+
 PARENTESIS ::= Parentesis_apertura OP | COMB | COMBRL | OPERANDO Parentesis_cierre;
 ARITMETICO ::= Suma | Resta | Division | Multiplicacion | Modulo | Potencia;
 OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT;
@@ -158,9 +189,9 @@ OPLOG ::= OPLOG Numeral;
 EXPRLOG ::= ID | BOOL |OPLOG | FUNCS;
 BLOQUE ::= EXPR;
 BLOQUE ::= EXPR BLOQUE;
-OPERACION ::= OP | COMB;
 EXPR ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS;
 EXPRVAL ::= ID	| TIPO | OPERACION | ESTRUCTURA | FUNCS;
+OPERACION ::= OP | COMB;
 OP ::= OPARITM | OPUNIARIA | OPREL | OPLOG;
 COMB ::= OP | ARITMETICO Parentesis_apertura OPERANDOARIT | OPARITM Parentesis_cierre OP;
 COMB ::= OP | OPUNIARIA OP;
@@ -172,24 +203,32 @@ OPRL ::= OPREL | OPLOG;
 COMBRL ::= OPRL | OPRL Parentesis_apertura RELACIONAL | RELBOOL Parentesis_cierre Parentesis_apertura OPERANDO | OPREL Parentesis_cierre;
 COMBRL ::= OPRL | OPRL RELBOOL Parentesis_apertura EXPRBOOL | OPREL Parentesis_cierre;
 COMBRL ::=  OPRL | OPRL LOGICO Parentesis_apertura EXPRLOG | OPLOG Parentesis_cierre;
+
 ESTRUCTURA ::= IF | WHILE | SWITCH;
+
 IF ::= If Parentesis_apertura COMBRL Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
 IF ::= If Parentesis_apertura COMBRL Parentesis_cierre Llave_apertura BLOQUE Llave_cierre Else Llave_apertura BLOQUE Llave_cierre;
+
 WHILE ::= While Parentesis_apertura COMB Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+
 SWITCH ::= Switch Parentesis_apertura OPERANDO Parentesis_cierre Llave_apertura CASE Llave_cierre;
 CASE ::= CASE | CASES CASE;
 CASES ::= CASE | CASES CASE;
 CASE ::= CASE Parentesis_apertura LITERAL Parentesis_cierre Llave_apertura BLOQUE | Parentesis_apertura BLOQUE Break Parentesis_cierre Llave_cierre;
 CASE ::= CASE Parentesis_apertura LITERAL Parentesis_cierre Llave_apertura BLOQUE Parentesis_apertura Break | Return Parentesis_cierre Llave_cierre;
+
 LITERALPRINT ::= STRING | CHAR | INT | FLOAT;
 FUNCPRINT ::= Print Parentesis_apertura ID | LITERALPRINT Parentesis_cierre Numeral;
 FUNCPRINT ::= Print Parentesis_apertura FUNCS | VARIABLE | OPERACION Parentesis_cierre Numeral;
+
 FUNC ::= TIPO ID Parentesis_apertura Parentesis_cierre Llave_apertura Llave_cierre Numeral;
 FUNC ::= TIPO ID Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Return FUNCRETURN Llave_cierre Numeral;
 FUNC ::= TIPO ID Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE Return FUNCRETURN Llave_cierre Numeral;
 FUNC ::= TIPO ID Parentesis_apertura PARAM  Parentesis_cierre Llave_apertura Return FUNCRETURN Llave_cierre Numeral;
+
 FUNCS ::= FUNC | FUNCPRINT;
 FUNCS ::= FUNC FUNCS;
+
 FUNCRETURN ::= COMB | Parentesis_apertura INT | FLOAT | CHAR | Null Parentesis_cierre;
 
 INICIO ::= MAIN;
@@ -199,8 +238,3 @@ MAIN ::= INT MAIN Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Ll
 COMENTARIO ::= Division Division BLOQUE;
 COMENTARIO ::= Multiplicacion Parentesis_apertura INICIO | BLOQUE Parentesis_cierre Multiplicacion;
 */
-
-
-
-
-//======================================
