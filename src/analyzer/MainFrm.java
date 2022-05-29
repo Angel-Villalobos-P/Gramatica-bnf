@@ -1,6 +1,5 @@
 package analyzer;
 
-//import java_cup.Lexer;
 import java_cup.runtime.DefaultSymbolFactory;
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
@@ -302,10 +301,6 @@ public class MainFrm extends javax.swing.JFrame {
                 new MainFrm().setVisible(true);
             }
         });*/
-//        TablaSimbolos tablaSimbolos = new TablaSimbolos();
-//        TablaSimbolos.tablaSimbolos.add(new Variable("test", "global",1,1, TipoDato.Int));
-//        System.out.println(tablaSimbolos.mostrarTablaSimbolos());
-
         JFrame frm = new JFrame();
         frm.setContentPane(new MainFrm().panel);
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
