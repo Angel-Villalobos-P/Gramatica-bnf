@@ -4,7 +4,7 @@ import java_cup.runtime.Symbol;
 
 parser code
 {:
-    private Symbol s;
+  private Symbol s;
 
     public void syntax_error(Symbol s){
         this.s = s;
@@ -13,6 +13,53 @@ parser code
     public Symbol getS(){
         return this.s;
 }
+
+    private TablaSimbolos tablaSimbolos = new TablaSimbolos();
+
+    //Errores
+     // Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+//        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+//            try {
+//                String lexema = s.value.toString();
+//                int fila = s.left + 1;
+//                int columna = s.right;
+//
+//                String mensaje = "Error sintáctico irrecuperable, con el símbolo: " + lexema;
+//                //System.err.println("Error sintactico inrrecuperable en la linea: " + fila + " y columna: " + columna + ". No se esperaba el componente: " + lexema);
+//            } catch(Exception e) {}
+//        }
+//
+//        public void report_error(String message, Object info){
+//            if (info instanceof String) {
+//                System.out.println(message);
+//            }
+//            else {
+//                if (info instanceof Symbol){
+//                    String m = "Error sintático en: " + message;
+//                    Symbol s = (Symbol)info;
+//                    m += ", con el símbolo: \"" + s.value.toString() + "\"";
+//                } else {
+//                    System.err.println(message);
+//                }
+//            }
+//        }
+//
+//        public void ErrorSemantico(Simbolo simbolo) {
+//            String msg = "Error en la línea "+ simbolo.getFila() + ", columna "+ simbolo.getColumna() +". Ya existe ";
+//            if(simbolo instanceof Variable){
+//                msg += "la variable '" + simbolo.getIdentificador() + "' en el ámbito " + simbolo.getScope();
+//            }
+//        }
+//        public void ErrorSemantico(String tipo, String identificador, int fila, int columna){
+//                String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna + ". ";
+//                switch (tipo){
+//                    case "variable":
+//                        msg += "La variable '" + identificador + "' no ha sido declarada";
+//                        break;
+//                }
+//                //acá se pondría el metodo para agregar los errores a la UI
+//                System.out.println(msg);
+//            }
 :};
 
 terminal  Int, Float, Bool, Char, Char_literal, String, String_literal, Array, Null, If, Else, While, Switch, Case, Print,
@@ -37,9 +84,25 @@ MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura Llave_cie
 BLOQUE ::= EXPR | BLOQUE EXPR;
 EXPR ::= VARIABLE | VAL_ARRAY | OPERACION | ESTRUCTURA | RETURN | USEFUNC | FUNCPRINT;
 VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
-CREACION ::= TIPO Identificador Numeral; // e.g: int x#
-CREAASIG ::= TIPO Identificador Igual TIPOASIG Numeral; // e.g: int x = 4#
-ASIGNAR ::= Identificador Igual TIPOASIG Numeral; // e.g: x = y#
+CREACION ::= TIPO Identificador:id_var Numeral // e.g: int x#
+    {:
+//        TablaSimbolos.tablaSimbolos.add(id_var, id_varleft, id_varright);
+        tablaSimbolos.agregarVariable(id_var.toString(), id_varleft, id_varright);
+        Variable var = tablaSimbolos.variables.get(0);
+        tablaSimbolos.insertar(var);
+        System.out.println(tablaSimbolos.getTablaSimbolos());
+    :};
+CREAASIG ::= TIPO Identificador:_id Igual TIPOASIG Numeral // e.g: int x = 4#
+    {:
+        //Aca se podría comprobar si el tipo a asignar corresponde con el tipo del id
+//        tablaSimbolos.insertar(_id);
+    :};
+ASIGNAR ::= Identificador:id Igual TIPOASIG Numeral // e.g: x = y#
+    {:
+        System.out.println(id);
+        //Aca se podría comprobar si el tipo a asignar corresponde con el tipo del id
+//        tablaSimbolos.insertar(id);
+    :};
 TIPO ::= Int | Bool | Float | Char | String;
 TIPOASIG ::= Numero | Float | String_literal | Char_literal | Identificador | ARRAY | BOOL | OPERACION | USEFUNC;
 BOOL ::= True | False;

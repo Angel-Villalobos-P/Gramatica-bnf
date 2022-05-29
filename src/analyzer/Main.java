@@ -64,9 +64,12 @@ public class Main {
 //    }
 
     /*
-    Add this to lexer.flex:
+    Add this to lexer.java:
     package analyzer;
     import static analyzer.Tokens.*;
+
+    Add this to LexerCup.java:
+    package analyzer;
      */
 
     public static void main(String[] args) throws Exception {
