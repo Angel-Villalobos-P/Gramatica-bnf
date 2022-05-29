@@ -7,37 +7,10 @@
     </content>
     <orderEntry type="jdk" jdkName="16" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/JFlex.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java-cup-11b-runtime.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java-cup-11b.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java-cup-11a.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libraries/JFlex.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,7 +19,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Escritorio/Diego/Sem VII 2022/Compiladores/Proyecto 1/java_cup.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libraries/java-cup-11b-runtime.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libraries/java-cup-11b.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

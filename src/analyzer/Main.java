@@ -69,7 +69,11 @@ public class Main {
     import static analyzer.Tokens.*;
      */
 
+    //Ruta del proyecto
+    static String rootPath = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf";
+
     public static void main(String[] args) throws Exception {
+
 //        System.out.println("--- generar lexer ---");
 //
 //        String ruta = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Lexer.flex";
@@ -83,9 +87,13 @@ public class Main {
 //        String lexerCup_path = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/LexerCup.flex";
 //        String[] sintax_path = {"-parser", "Sintax", "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.cup"};
 
-        String lexer_Path = "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
-        String lexerCup_path = "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/LexerCup.flex";
-        String[] sintax_path = {"-parser", "Sintax", "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.cup"};
+//        String lexer_Path = "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Lexer.flex";
+//        String lexerCup_path = "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/LexerCup.flex";
+//        String[] sintax_path = {"-parser", "Sintax", "/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.cup"};
+//
+        String lexer_Path = rootPath + "/src/analyzer/Lexer.flex";
+        String lexerCup_path = rootPath + "/src/analyzer/LexerCup.flex";
+        String[] sintax_path = {"-parser", "Sintax", rootPath + "/src/analyzer/Sintax.cup"};
         generar(lexer_Path, lexerCup_path, sintax_path);
     }
 
@@ -102,9 +110,11 @@ public class Main {
         JFlex.Main.generate(archivo);
         java_cup.Main.main(rutaS);
 
+
         // Verifica si ya existe el file sym, para eliminarlo y mover el otro recién generado
 //        Path rutaSym = Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/sym.java");
-        Path rutaSym = Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/sym.java");
+//        Path rutaSym = Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/sym.java");
+        Path rutaSym = Paths.get(rootPath + "/src/analyzer/sym.java");
 
         if (Files.exists(rutaSym)) {
             Files.delete(rutaSym);
@@ -113,13 +123,15 @@ public class Main {
 //                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/sym.java"),
 //                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/sym.java")
 
-                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/sym.java"),
-                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/sym.java")
-
+//                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/sym.java"),
+//                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/sym.java")
+                Paths.get(rootPath + "/sym.java"),
+                Paths.get(rootPath + "/src/analyzer/sym.java")
         );
         // Verifica si ya existe el file sintax, para eliminarlo y mover el otro recién generado
 //        Path rutaSin = Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.java");
-        Path rutaSin = Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.java");
+//        Path rutaSin = Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.java");
+        Path rutaSin = Paths.get(rootPath + "/src/analyzer/Sintax.java");
 
         if (Files.exists(rutaSin)) {
             Files.delete(rutaSin);
@@ -128,8 +140,10 @@ public class Main {
 //                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/Sintax.java"),
 //                Paths.get("/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf/src/analyzer/Sintax.java")
 
-                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/Sintax.java"),
-                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.java")
+//                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/Sintax.java"),
+//                Paths.get("/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf/src/analyzer/Sintax.java")
+                Paths.get(rootPath + "/Sintax.java"),
+                Paths.get(rootPath + "/src/analyzer/Sintax.java")
 
         );
     }

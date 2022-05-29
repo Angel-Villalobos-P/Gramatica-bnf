@@ -1,6 +1,8 @@
 package analyzer;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class TablaSimbolos {
     static ArrayList<Simbolo> tablaSimbolos = new ArrayList<>();
@@ -8,9 +10,16 @@ public class TablaSimbolos {
     //contiene todas las variables EN ORDEN SECUENCIAL
     public ArrayList<Variable> variables;
 
+    //pila que almacena todos los tipos de datos que se definen
+    public Deque<TipoDato> tiposDato = new LinkedList<>();
+
     public TablaSimbolos() {
         tablaSimbolos = new ArrayList<>();
         this.variables = new ArrayList<>();
+    }
+
+    public int getTablaSimbolosSize() {
+        return tablaSimbolos.size();
     }
 
     /**
@@ -35,7 +44,6 @@ public class TablaSimbolos {
                 auxSimbol = simbol;
                 if (auxSimbol instanceof Variable) {
                     return (auxSimbol.identificador.equals(auxVar.identificador) && auxSimbol.scope.equals(auxVar.scope));
-//                        return true;
                 }
             }
         }
@@ -72,13 +80,36 @@ public class TablaSimbolos {
             }
         }
         //Si no la encuentra en el ámbito, busca en las globales
-        for (Simbolo simbolo : tablaSimbolos) {
-            if (simbolo instanceof Variable && simbolo.identificador.equals(nombre) && simbolo.scope.equals("Global")) {
-                return (Variable) simbolo;
-            }
-        }
+//        for (Simbolo simbolo : tablaSimbolos) {
+//            if (simbolo instanceof Variable && simbolo.identificador.equals(nombre) && simbolo.scope.equals("Global")) {
+//                return (Variable) simbolo;
+//            }
+//        }
         return null;
     }
+
+    public boolean verificarTipo(String id, String scope, TipoDato tipoAsig) {
+        Variable auxVar = getVariable(id, scope); //encuentra el simbolo
+        return auxVar.getTipoDato() == tipoAsig;
+//        return switch (tipoAsig) { // evalúa si el simbolo es del mismo tipo que de la asignación
+//            case Int, Float, Bool -> auxVar.getTipoDato() == tipoAsig;
+//            default -> false;
+//        };
+    }
+
+//    public Simbolo getSimbolo(String id) {
+//
+//    }
+
+    /**
+     * Agrega los tipos de dato que se definen
+     *
+     * @param tipoDato valor del enunm del tipo de dato
+     */
+    public void agregarTipoDato(TipoDato tipoDato) {
+        this.tiposDato.add(tipoDato);
+    }
+
 
     //    public void agregarVariable(String identificador, String scope, int fila, int columna, TipoDato tipo) {
 //        Variable var = new Variable(identificador, scope, fila, columna, tipo);
@@ -91,6 +122,7 @@ public class TablaSimbolos {
         var.identificador = identificador;
         var.setFila(fila + 1);
         var.setColumna(columna);
+        var.setTipoDato(tiposDato.pollLast());
 
         //Agrega la primera variable de la producción
         variables.add(var);
@@ -101,7 +133,8 @@ public class TablaSimbolos {
         for (Simbolo s : tablaSimbolos) {
             if (s instanceof Variable) {
                 stringTable.append("Variable: ").append(s.identificador).append(", tipo: ").append(((Variable) s).getTipoDato()).append(", Scope: ").append(s.scope).append("\n");
-            }        }
+            }
+        }
         return stringTable.toString();
     }
 

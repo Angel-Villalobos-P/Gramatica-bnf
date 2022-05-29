@@ -70,6 +70,7 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 ("\¡" | "\$" | "\%" | "\\" | "\:" | "\?" | "\¿" | "\@") {return new Symbol(sym.Simb_especial, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
+{D} {return new Symbol(sym.Numero, yychar, yyline, yytext());}
 {F} {return new Symbol(sym.Float, yychar, yyline, yytext());}
 {S} {return new Symbol(sym.String_literal, yychar, yyline, yytext());}
 {C} {return new Symbol(sym.Char_literal, yychar, yyline, yytext());}

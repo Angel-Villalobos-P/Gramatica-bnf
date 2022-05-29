@@ -5,14 +5,37 @@ import java_cup.runtime.Symbol;
 parser code
 {:
     private Symbol s;
+    private TablaSimbolos tablaSimbolos = new TablaSimbolos();
+    private boolean globalScope = true;
+    private TipoDato tipoAsignacion;
 
     public void syntax_error(Symbol s){
-        this.s = s;
+        s = s;
+        System.out.println("compiler has detected a syntax error at line " + s.left
+                    + " column " + s.right);
     }
 
     public Symbol getS(){
         return this.s;
-}
+    }
+
+    //****************************** Errores ************************
+    public void ErrorSemantico(Simbolo simbolo) {
+        String msg = "Error en la línea "+ simbolo.getFila() + ", columna "+ simbolo.getColumna() +". Ya existe ";
+        if(simbolo instanceof Variable){
+            msg += "la variable '" + simbolo.getIdentificador() + "' en el scope: " + simbolo.getScope();
+        }
+//        else if(simbolo instanceof Funcion){
+//            msg += "la funcion o procedimiento '" + simbolo.getIdentificador() + "' con los mismos parámetros";
+//        }
+        //mostrar error en la UI
+        System.out.println(msg);
+    }
+    public void ErrorSemantico(String identificador, int fila, int columna) {
+        String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna +
+        ". Tipos de datos no corresponden en la asignación de " + identificador;
+        System.out.println(msg);
+    }
 :};
 
 terminal  Int, Float, Bool, Char, Char_literal, String, String_literal, Array, Null, If, Else, While, Switch, Case, Print,
@@ -37,11 +60,106 @@ MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura Llave_cie
 BLOQUE ::= EXPR | BLOQUE EXPR;
 EXPR ::= VARIABLE | VAL_ARRAY | OPERACION | ESTRUCTURA | RETURN | USEFUNC | FUNCPRINT;
 VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
-CREACION ::= TIPO Identificador Numeral; // e.g: int x#
-CREAASIG ::= TIPO Identificador Igual TIPOASIG Numeral; // e.g: int x = 4#
-ASIGNAR ::= Identificador Igual TIPOASIG Numeral; // e.g: x = y#
-TIPO ::= Int | Bool | Float | Char | String;
-TIPOASIG ::= Numero | Float | String_literal | Char_literal | Identificador | ARRAY | BOOL | OPERACION | USEFUNC;
+CREACION ::= TIPO Identificador:id Numeral // e.g: int x#
+    {:
+//        tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
+        if (globalScope) {//setea el scope a globql
+            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
+                tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
+            }
+
+            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
+                Variable var = tablaSimbolos.variables.get(i);
+                var.setScope("Global");
+                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
+                    if (!tablaSimbolos.existeSimbolo(var)) {
+                        tablaSimbolos.insertar(var);
+                    } else {
+                        ErrorSemantico(var);
+                    }
+                } else {
+                    tablaSimbolos.insertar(var);
+                }
+            }
+        }
+    :};
+CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int x = 4#
+    {:
+        //por acá debe hacer la comprobación de tipos
+        //...
+        if (globalScope) {//setea el scope a globql
+            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
+                tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
+            }
+
+            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
+                Variable var = tablaSimbolos.variables.get(i);
+                var.setScope("Global");
+                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
+                    if (!tablaSimbolos.existeSimbolo(var)) {
+                        tablaSimbolos.insertar(var);
+                    } else {
+                        ErrorSemantico(var);
+                    }
+                } else {
+                    tablaSimbolos.insertar(var);
+                }
+            }
+            if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
+                System.out.println("Operación inválida, tipo de datos diferentes");
+                ErrorSemantico(id.toString(), idleft, idright);
+                return null;
+            }
+        }
+    :} | error:e {: System.out.println(e.toString()); :};
+//ASIGNAR ::= Identificador:id Igual Numero:_tipoAsig Numeral
+//{:
+//System.out.println(_tipoAsig.toString());
+//:};
+ASIGNAR ::= Identificador:id Igual TIPOASIG:_tipoAsig Numeral // e.g: x = y#
+    {:
+//        Variable aux = tablaSimbolos.getVariable(id.toString(), "Global");
+//        System.out.println(aux.getIdentificador() + " - " + aux.getTipoDato() + " - " + aux.getScope());
+//        System.out.println(_tipoAsig.toString());
+    :};
+TIPO ::= Int:_int
+    {:
+        RESULT = new Symbol(-1, _int.toString());
+        tablaSimbolos.agregarTipoDato(TipoDato.Int);
+    :}
+    | Bool:_bool
+    {:
+            RESULT = new Symbol(-1, _bool.toString());
+            tablaSimbolos.agregarTipoDato(TipoDato.Bool);
+     :}
+    | Float:_float
+    {:
+            RESULT = new Symbol(-1, _float.toString());
+            tablaSimbolos.agregarTipoDato(TipoDato.Float);
+    :}
+    | Char:_char
+    {:
+            RESULT = new Symbol(-1, _char.toString());
+            tablaSimbolos.agregarTipoDato(TipoDato.Char);
+    :}
+    | String:_string
+    {:
+            RESULT = new Symbol(-1, _string.toString());
+            tablaSimbolos.agregarTipoDato(TipoDato.String);
+    :}
+    ;
+TIPOASIG ::= Numero:num
+    {:
+        tipoAsignacion = TipoDato.Int;
+        System.out.println(num + " <--- numero");
+        System.out.println(tipoAsignacion + " <--- tipo de asig");
+    :}
+ | Float:_float
+     {:
+         System.out.println(_float + " <--- float");
+     :}
+  | String_literal | Char_literal | Identificador | ARRAY | BOOL | OPERACION | USEFUNC;
+//TIPOASIG ::= Numero | Float | String_literal | Char_literal | Identificador;// | ARRAY | BOOL | OPERACION | USEFUNC;
 BOOL ::= True | False;
 
 VAL_ARRAY ::= CREAARRAY | ASIGNARARRAY;

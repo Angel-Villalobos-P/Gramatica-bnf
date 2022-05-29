@@ -69,7 +69,7 @@ break {lexema = yytext(); return Break;}
 
 {L}({L}|{D})* {lexema = yytext(); return Identificador;}
 /*("(-"{D}+")")|{D}+ {lexema = yytext(); return Numero;}*/
-{D} {lexema = yytext(); return Numero;}
+{D} {lexema = yytext(); return Tokens.Numero;}
 {F} {lexema = yytext(); return Tokens.Float;}
 {S} {lexema = yytext(); return Tokens.String_literal;}
 {C} {lexema = yytext(); return Tokens.Char_literal;}

@@ -67,6 +67,8 @@ public class MainFrm extends javax.swing.JFrame {
                     txt_sintactico.setForeground(new Color(25, 111, 61));
                 } catch (Exception ex) {
                     Symbol sym = s.getS();
+                    System.out.println(ex);
+                    System.out.println(ex.getCause());
                     txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
                     txt_sintactico.setForeground(Color.red);
                 }

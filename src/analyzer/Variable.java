@@ -20,4 +20,5 @@ public class Variable extends Simbolo {
     public void setTipoDato(TipoDato tipoDato) {
         this.tipoDato = tipoDato;
     }
+
 }
