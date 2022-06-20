@@ -46,5 +46,5 @@ public enum Tokens {
     Numero,
     Linea,
     Break,
-    ERROR
+    Error
 }

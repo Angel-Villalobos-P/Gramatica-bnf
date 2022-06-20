@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +28,8 @@ public class MainFrm extends javax.swing.JFrame {
         model = (DefaultTableModel) table1.getModel();
         model.addColumn("Símbolos");
         model.addColumn("Línea");
+        txt_file.setTabSize(2);
+        txt_file.setFont(new Font("Serif", Font.PLAIN, 14));
 
         btn_file.addActionListener(new ActionListener() {
             @Override
@@ -43,35 +46,39 @@ public class MainFrm extends javax.swing.JFrame {
                 }
             }
         });
-        btn_lexico.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (!txt_file.getText().isBlank()) {
-                        analisis_lexico();
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(MainFrm.class.getName()).log(Level.SEVERE, null, ex);
+
+        btn_lexico.addActionListener(e -> {
+            try {
+                if (!txt_file.getText().isBlank()) {
+                    analisis_lexico();
                 }
+                else {
+                    System.out.println("Código fuente vacío");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrm.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btn_sintactico.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String ST = txt_file.getText();
-                Sintax s = new Sintax(new analyzer.LexerCup(new StringReader(ST)));
 
-                try {
-                    s.parse();
-                    txt_sintactico.setText("Analisis realizado correctamente");
-                    txt_sintactico.setForeground(new Color(25, 111, 61));
-                } catch (Exception ex) {
-                    Symbol sym = s.getS();
-                    System.out.println(ex);
-                    System.out.println(ex.getCause());
-                    txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
-                    txt_sintactico.setForeground(Color.red);
-                }
+        btn_sintactico.addActionListener(e -> {
+            String ST = txt_file.getText();
+            Sintax s = new Sintax(new LexerCup(new StringReader(ST)));
+
+            try {
+                s.parse();
+                txt_sintactico.setText("Analisis realizado correctamente");
+                txt_sintactico.setForeground(new Color(25, 111, 61));
+            } catch (Exception ex) {
+                Symbol sym = s.getS();
+                txt_sintactico.setText("Error de sintaxis");
+                txt_sintactico.setForeground(new Color(162, 2, 2));
+//                System.out.println(sym);
+//                System.out.println(s.test());
+//                System.out.println(ex.getMessage());
+//                System.out.println(Arrays.toString(ex.getStackTrace()));
+//                System.out.println("Causa de error: " + ex.getCause());
+//                txt_sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+//                txt_sintactico.setForeground(Color.red);
             }
         });
         limpiarButton.addActionListener(new ActionListener() {
@@ -93,7 +100,7 @@ public class MainFrm extends javax.swing.JFrame {
 
     private void analisis_lexico() throws IOException {
         int cont = 1;
-        String expresion = (String) txt_file.getText();
+        String expresion = txt_file.getText();
         Lexer lexer = new Lexer(new StringReader(expresion));
 
         table1.setShowGrid(false);
@@ -102,6 +109,7 @@ public class MainFrm extends javax.swing.JFrame {
         while (true) {
             Tokens token = lexer.yylex();
             if (token == null) {
+//                System.out.println("ERROR: token null");
                 return;
             }
             switch (token) {
@@ -283,7 +291,7 @@ public class MainFrm extends javax.swing.JFrame {
                 case Simb_especial:
                     model.addRow(new Object[]{lexer.lexema, "<Simbolo especial>"});
                     break;
-                case ERROR:
+                case Error:
                     model.addRow(new Object[]{lexer.lexema, "<Símbolo no encontrado>"});
 
                     break;

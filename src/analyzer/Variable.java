@@ -12,6 +12,13 @@ public class Variable extends Simbolo {
         super();
         this.tipoDato = null;
     }
+    public Variable(String id, String scope, TipoDato tipoDato) {
+        super(id, scope);
+        this.tipoDato = tipoDato;
+    }
+    public Variable(String id, String scope) {
+        super(id, scope);
+    }
 
     public TipoDato getTipoDato() {
         return tipoDato;

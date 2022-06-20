@@ -4,15 +4,27 @@ import java_cup.runtime.Symbol;
 
 parser code
 {:
+    @Override
+    protected int error_sync_size(){
+        return 1;
+    }
+    private Symbol tokenError;
     private Symbol s;
     private TablaSimbolos tablaSimbolos = new TablaSimbolos();
     private boolean globalScope = true;
+    private String scopeName;
     private TipoDato tipoAsignacion;
 
     public void syntax_error(Symbol s){
-        s = s;
+        this.s = s;
+        this.tokenError = s;
+        String lexema = s.value.toString();
+        int fila = s.left + 1;
+        int columna = s.right;
+
         System.out.println("compiler has detected a syntax error at line " + s.left
                     + " column " + s.right);
+        System.out.println("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
     }
 
     public Symbol getS(){
@@ -33,15 +45,33 @@ parser code
     }
     public void ErrorSemantico(String identificador, int fila, int columna) {
         String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna +
-        ". Tipos de datos no corresponden en la asignación de " + identificador;
+        ": tipos de datos no corresponden en la asignación de " + identificador;
         System.out.println(msg);
+    }
+    public void ErrorSemantico(String errorMsg) {
+            //String errorMsg = "Error en " + identificador + " " + msg;
+            System.out.println(errorMsg);
+        }
+
+    public void report_error(String message, Object info) {
+        if (info instanceof String) {
+            System.out.println(message);
+        } else {
+            if (info instanceof Symbol s) {
+                String m = "Error sintático en: " + message;
+                m += ", con el símbolo: \"" + s.value.toString() + "\"";
+    //          ErrorUI(m, s.value.toString(), (s.left + 1), s.right);
+            } else {
+            System.err.println(message);
+            }
+        }
     }
 :};
 
 terminal  Int, Float, Bool, Char, Char_literal, String, String_literal, Array, Null, If, Else, While, Switch, Case, Print,
 Default, Read, Return, Main, Numeral, Igual, Suma, Resta, Division, Multiplicacion, Modulo, Potencia, Parentesis_apertura,
 Parentesis_cierre, Llave_apertura, Llave_cierre, Corchete_apertura, Corchete_cierre, Comillas, Comilla_simple,
-Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico, Op_Booleano, Identificador, Numero, Linea, ERROR, Punto, Coma,
+Op_Incremento, Op_Decremento, Op_Relacional, Op_Logico, Op_Booleano, Identificador, Numero, Linea, Error, Punto, Coma,
 Break, Simb_especial, True, False;
 
 non terminal DIGPOS, LETTERUPPER, LETTERLOWER, MARKS, SIMB_ESPECIAL, LETTER, DIG, NUMZER, NUMPOS, NUMNEG, NUM, ID, INT, FLOAT, BOOL,
@@ -50,6 +80,10 @@ VARIABLE, PARENTESIS, COMB, COMBRL, OPARITM, OPERANDO, OPARIT, ARITMETICO, OPERA
 NEGATIVO, INCR, DECR, EXPRUNARIA, RELACIONAL, RELBOOL, OPREL, OPRL, EXPRBOOL, LOGICO, OPLOG, EXPRLOG, BLOQUE, OPERACION, EXPR,
 EXPRVAL, ESTRUCTURA, IF, WHILE, SWITCH, CASE, CASES, OP, LITERALPRINT, FUNCPRINT, PRINT, FUNC, FUNCS, INICIO, MAIN,
 COMENTARIO, TIPOASIG, EXPRCOM, CASEOPTION, RETURN, USEFUNC, ARRAY, CREAARRAY, ASIGNARARRAY, VAL_ARRAY;
+
+non terminal Symbol epsilon;
+
+//precedence left Suma, Resta, Multiplicacion, Division;
 
 start with INICIO;
 
@@ -62,66 +96,118 @@ EXPR ::= VARIABLE | VAL_ARRAY | OPERACION | ESTRUCTURA | RETURN | USEFUNC | FUNC
 VARIABLE ::= CREACION | CREAASIG | ASIGNAR;
 CREACION ::= TIPO Identificador:id Numeral // e.g: int x#
     {:
-//        tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
-        if (globalScope) {//setea el scope a globql
-            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
-                tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
-            }
-
-            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
-                Variable var = tablaSimbolos.variables.get(i);
-                var.setScope("Global");
-                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
-                    if (!tablaSimbolos.existeSimbolo(var)) {
-                        tablaSimbolos.insertar(var);
-                    } else {
-                        ErrorSemantico(var);
-                    }
-                } else {
-                    tablaSimbolos.insertar(var);
-                }
-            }
+        if (globalScope){
+            scopeName = "Global";
         }
-    :};
+        Variable var = new Variable(id.toString(), scopeName);
+        if (!tablaSimbolos.existeSimbolo(var, scopeName)){
+            tablaSimbolos.insertarVariable(var);
+        } else {
+            ErrorSemantico(var);
+        }
+        //========================================
+//        if (globalScope) {//setea el scope a global
+//            Variable newVar = null;
+//            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
+//                tablaSimbolos.agregarVariable(id.toString(), idleft, idright, "Global"); //agrega la variable
+//            } else {//si ya existe, obtengala y muestre el error
+//                newVar = tablaSimbolos.getVariable(id.toString(), "Global");
+//                ErrorSemantico(newVar);
+//            }
+//
+//            /* verificar si existe el simbolo, es para que no se use el mismo id en una funcion con el mismo scope,
+//            por ejemplo: int z# int x(){}
+//            pero puede hacerse cuando se declaren funciones
+//            */
+//            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
+//                Variable var = tablaSimbolos.variables.get(i);
+////                var.setScope("Global");
+//                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
+//                    if (!tablaSimbolos.existeSimbolo(var)) {
+//                        tablaSimbolos.insertar(var);
+//                    } else {
+//                        ErrorSemantico(var);// ya existe simbolo
+//                    }
+//                } else {
+//                    tablaSimbolos.insertar(var);
+//                }
+//            }
+//            //sino es scope global, setear el scope correspondiente
+//        }
+    :}
+    | TIPO Identificador Error
+        {:
+            report_error("Creación de variable", s);
+            RESULT = new Symbol(-1);
+        :} | epsilon
+    ;
 CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int x = 4#
     {:
+        if (globalScope){
+            scopeName = "Global";
+        }
+        Variable var = new Variable(id.toString(), scopeName);
+        if (!tablaSimbolos.existeSimbolo(var, scopeName)){
+            tablaSimbolos.insertarVariable(var);
+        } else {
+            ErrorSemantico(var);
+        }
+        //verificar tipos
+        if (!tablaSimbolos.verificarTipo(id.toString(), scopeName, tipoAsignacion)){
+            System.out.println("Operación inválida, tipo de datos diferentes");
+            ErrorSemantico(id.toString(), idleft, idright);
+            return null;
+        }
         //por acá debe hacer la comprobación de tipos
         //...
-        if (globalScope) {//setea el scope a globql
-            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
-                tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
-            }
+//        if (globalScope) {//setea el scope a global
+//            if (!tablaSimbolos.existeVariable(id.toString(), "Global")){
+//                tablaSimbolos.agregarVariable(id.toString(), idleft, idright); //agrega la variable
+//            }
+//
+//            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
+//                Variable var = tablaSimbolos.variables.get(i);
+//                var.setScope("Global");
+//                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
+//                    if (!tablaSimbolos.existeSimbolo(var)) {
+//                        tablaSimbolos.insertar(var);
+//                    } else {
+//                        ErrorSemantico(var);
+//                    }
+//                } else {
+//                    tablaSimbolos.insertar(var);
+//                }
+//            }
+//            if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
+//                System.out.println("Operación inválida, tipo de datos diferentes");
+//                ErrorSemantico(id.toString(), idleft, idright);
+//                return null;
+//            }
+//        }
+    :} | error:e; // {: System.out.println(e.toString()); :};
 
-            for (int i = 0; i < tablaSimbolos.variables.size(); i++) {
-                Variable var = tablaSimbolos.variables.get(i);
-                var.setScope("Global");
-                if (tablaSimbolos.getTablaSimbolosSize() > 1) {
-                    if (!tablaSimbolos.existeSimbolo(var)) {
-                        tablaSimbolos.insertar(var);
-                    } else {
-                        ErrorSemantico(var);
-                    }
-                } else {
-                    tablaSimbolos.insertar(var);
-                }
-            }
-            if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
-                System.out.println("Operación inválida, tipo de datos diferentes");
-                ErrorSemantico(id.toString(), idleft, idright);
-                return null;
-            }
-        }
-    :} | error:e {: System.out.println(e.toString()); :};
-//ASIGNAR ::= Identificador:id Igual Numero:_tipoAsig Numeral
-//{:
-//System.out.println(_tipoAsig.toString());
-//:};
 ASIGNAR ::= Identificador:id Igual TIPOASIG:_tipoAsig Numeral // e.g: x = y#
     {:
+//        RESULT = new Symbol(-1, _tipoAsig.toString());
+
+        Variable var = tablaSimbolos.getVariable(id.toString(), scopeName);
+        if (var == null){
+            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+        } else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
+            System.out.println("Operación inválida, tipo de datos diferentes");
+        }
+
+//        RESULT = new Symbol(-1, _tipoAsig.toString());
 //        Variable aux = tablaSimbolos.getVariable(id.toString(), "Global");
-//        System.out.println(aux.getIdentificador() + " - " + aux.getTipoDato() + " - " + aux.getScope());
-//        System.out.println(_tipoAsig.toString());
+//
+//        if(aux == null){// variables no declaradas
+//            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+//        } else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){ //comprobar el tipo, tipoAsignacion es del lado izq
+//            System.out.println("Operación inválida, tipo de datos diferentes");
+//        }
+//        Symbol tipoAsig = (Symbol) _tipoAsig;// aun no se para que necesito esto
     :};
+
 TIPO ::= Int:_int
     {:
         RESULT = new Symbol(-1, _int.toString());
@@ -146,34 +232,104 @@ TIPO ::= Int:_int
     {:
             RESULT = new Symbol(-1, _string.toString());
             tablaSimbolos.agregarTipoDato(TipoDato.String);
-    :}
-    ;
+    :};
 TIPOASIG ::= Numero:num
     {:
+        RESULT = new Symbol(-1, num.toString());
         tipoAsignacion = TipoDato.Int;
-        System.out.println(num + " <--- numero");
-        System.out.println(tipoAsignacion + " <--- tipo de asig");
     :}
  | Float:_float
-     {:
-         System.out.println(_float + " <--- float");
-     :}
-  | String_literal | Char_literal | Identificador | ARRAY | BOOL | OPERACION | USEFUNC;
-//TIPOASIG ::= Numero | Float | String_literal | Char_literal | Identificador;// | ARRAY | BOOL | OPERACION | USEFUNC;
-BOOL ::= True | False;
+    {:
+        RESULT = new Symbol(-1, _float.toString());
+        tipoAsignacion = TipoDato.Float;
+    :}
+ | String_literal:str_literal
+    {:
+           RESULT = new Symbol(-1, str_literal.toString());
+           tipoAsignacion = TipoDato.String;
+    :}
+ | Char_literal:char_lit
+    {:
+        RESULT = new Symbol(-1, char_lit.toString());
+        tipoAsignacion = TipoDato.Char;
+    :}
+ | Identificador:id
+    {:
+        RESULT = new Symbol(-1, id.toString());
+        Variable variable = tablaSimbolos.getVariable(id.toString(), scopeName);//global por ahora
+
+        if (variable == null){
+             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+        } else if (variable.getTipoDato() == TipoDato.Int){
+            tipoAsignacion = TipoDato.Int;
+        } else if(variable.getTipoDato() == TipoDato.Float){
+            tipoAsignacion = TipoDato.Float;
+        } else {
+            System.out.println("Operación inválida, tipo de datos diferentes");
+        }
+    :}
+    | Op_Booleano:op_bool
+    {:
+        RESULT = new Symbol(-1, op_bool.toString());
+        tipoAsignacion = TipoDato.Bool;
+    :}
+
+  | ARRAY | BOOL | OPERACION | USEFUNC;
+
+BOOL ::= True:t
+    {:
+        RESULT = new Symbol(-1, t.toString());
+        tipoAsignacion = TipoDato.Bool;
+    :}
+  | False:f
+    {:
+        RESULT = new Symbol(-1, f.toString());
+        tipoAsignacion = TipoDato.Bool;
+    :};
 
 VAL_ARRAY ::= CREAARRAY | ASIGNARARRAY;
+ARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre;// arr[index]# arr[2]#
+CREAARRAY ::= TIPO Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Numeral;// int arr[index]#  string arr[3]#
+ASIGNARARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Igual TIPOASIG Numeral; // arr[3]=5# ó int x = 2# arr[x]=1#
 ARRAYTIPO ::= Identificador | Numero;
-ARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre;
-CREAARRAY ::= ARRAYTIPO Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Numeral;
-ASIGNARARRAY ::= Identificador Corchete_apertura ARRAYTIPO Corchete_cierre Igual TIPOASIG Numeral;
 
 OPERACION ::= OP | COMB | Parentesis_apertura OPERACION Parentesis_cierre; // Combinacion de operaciones
 OP ::= OPARITM | OPUNIARIA | OPREL | OPLOG;
 
-OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT;
+OPARITM ::= OPERANDOARIT ARITMETICO OPERANDOARIT
+    {:
+        tipoAsignacion = TipoDato.Int;
+    :}; // num + 3# 3 + 3# num_1 + num_2#
+
 OPERANDOARIT ::= OPERANDO; //| USEFUNC;
-OPERANDO ::= Identificador | Numero | Float;
+OPERANDO ::= Identificador:id
+    {:
+         RESULT = new Symbol(-1, id.toString());
+//         Simbolo simbol = tablaSimbolos.getSimbolo(id.toString());// puede ser variable o funcion
+         Variable variable = tablaSimbolos.getVariable(id.toString(), "Global");//global por ahora
+
+         if (variable == null){
+             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+         } else if (variable.getTipoDato() == TipoDato.Int){
+             tipoAsignacion = TipoDato.Int;
+         } else if(variable.getTipoDato() == TipoDato.Float){
+             tipoAsignacion = TipoDato.Float;
+         } else {
+             System.out.println("Operación inválida, tipo de datos diferentes");
+         }
+         //else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", variable.getTipoDato())){ //comprobar el tipo
+             //System.out.println("Operación inválida, tipo de datos diferentes <-");
+         //}
+//          Symbol operando = (Symbol) id;// aun no se para que necesito esto
+    :} | Numero:num
+        {:
+            tipoAsignacion = TipoDato.Int;
+        :}
+       | Float
+        {:
+             tipoAsignacion = TipoDato.Float;
+        :};// num, 2, 1.5
+
 ARITMETICO ::= Suma | Resta | Division | Multiplicacion | Modulo | Potencia;
 
 OPUNIARIA ::= INCR | DECR;
@@ -185,11 +341,24 @@ INCR ::= Op_Incremento OPERANDO;
 DECR ::= OPERANDO Op_Decremento;
 DECR ::= Op_Decremento OPERANDO;
 
-OPREL ::= OPERANDO Op_Relacional OPERANDO;
+OPREL ::= OPERANDO Op_Relacional OPERANDO
+    {:
+        tipoAsignacion = TipoDato.Bool;
+    :};
 
 OPLOG ::= EXPRLOG Op_Logico EXPRLOG;
 OPLOG ::= Op_Logico EXPRLOG;
-EXPRLOG ::= Identificador | BOOL; // | USEFUNC;
+EXPRLOG ::= Identificador:id
+     {:
+         Variable variable = tablaSimbolos.getVariable(id.toString(), "Global");//global por ahora
+
+         if (variable == null){
+             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+         } else if (variable.getTipoDato() != TipoDato.Bool){
+             System.out.println("Operación inválida, tipo de datos diferentes");
+         }
+     :}
+    | BOOL; // | USEFUNC;
 
 COMB ::= OPERACION ARITMETICO OPERANDOARIT;
 //COMB ::= OPERACION ARITMETICO OPUNIARIA;  //     ->ERROR
@@ -207,15 +376,15 @@ IF ::= If Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE 
 
 WHILE ::= While Parentesis_apertura OPERACION Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
 
-CASEOPTION ::= String_literal | Char_literal | OPERANDO;
-SWITCH ::= Switch Parentesis_apertura OPERANDO Parentesis_cierre Llave_apertura CASES Llave_cierre;
 CASES ::= CASE | CASES CASE;
+SWITCH ::= Switch Parentesis_apertura OPERANDO Parentesis_cierre Llave_apertura CASES Llave_cierre;
 CASE ::= Case CASEOPTION Simb_especial BLOQUE;
 CASE ::= Case CASEOPTION Simb_especial Break Numeral;
 CASE ::= Case CASEOPTION Simb_especial BLOQUE Break Numeral;
 CASE ::= Default Simb_especial BLOQUE;
 CASE ::= Default Simb_especial Break Numeral;
 CASE ::= Default Simb_especial BLOQUE Break Numeral;
+CASEOPTION ::= String_literal | Char_literal | OPERANDO;
 
 FUNCS ::= FUNC | FUNCS FUNC;
 
@@ -224,8 +393,38 @@ FUNCPRINT ::= Print Parentesis_apertura TIPOASIG Parentesis_cierre;
 PARAMETRO ::= Coma TIPO Identificador;
 PARAM ::= PARAMETRO | PARAM Coma PARAMETRO;
 
-FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre;
-FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre;
+FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre
+    {:
+        globalScope = false;
+        Simbolo identificador;
+
+        if (!globalScope){
+            scopeName = id.toString();
+        }
+        Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
+        if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
+            tablaSimbolos.insertarFuncion(funcion);
+        } else {
+            ErrorSemantico(funcion);
+        }
+
+    :};
+FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre
+{:
+        globalScope = false;
+        Simbolo identificador;
+
+        if (!globalScope){
+            scopeName = id.toString();
+        }
+        Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
+        if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
+            tablaSimbolos.insertarFuncion(funcion);
+        } else {
+            ErrorSemantico(funcion);
+        }
+
+    :};
 FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre;
 FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura RETURN Llave_cierre;
 
@@ -233,7 +432,16 @@ USEFUNC ::= Identificador Parentesis_apertura Parentesis_cierre;
 USEFUNC ::= Identificador Parentesis_apertura PARAM Parentesis_cierre;
 //USEFUNC ::= USEFUNC Numeral;
 
-RETURN ::= Return TIPOASIG Numeral;
+RETURN ::= Return TIPOASIG:tipoAsig Numeral
+    {:
+         V ariable variable = tablaSimbolos.getVariable(id.toString(), "Global");//global por ahora
+
+        if (variable == null){
+            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+        }
+        Symbol returnType = (Symbol) tipoAsig;
+        System.out.println(tipoAsig);
+    :};
 
 EXPRCOM ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS | TIPOASIG;
 COMENTARIO ::= Division Division EXPRCOM;

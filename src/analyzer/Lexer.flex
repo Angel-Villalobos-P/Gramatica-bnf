@@ -10,6 +10,8 @@ espacio=[ ,\t,\r]+
 F=[-+]?[0-9]*\.[0-9]+
 S=\"[a-zA-Z_ ]*.+\"
 C=\'.\'
+%line
+%column
 
 %{
     public String lexema;
@@ -73,6 +75,6 @@ break {lexema = yytext(); return Break;}
 {F} {lexema = yytext(); return Tokens.Float;}
 {S} {lexema = yytext(); return Tokens.String_literal;}
 {C} {lexema = yytext(); return Tokens.Char_literal;}
-. {return ERROR;}      // Error de análisis
+. {return Error;}      // Error de análisis
 
 

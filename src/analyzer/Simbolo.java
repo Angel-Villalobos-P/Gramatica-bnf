@@ -21,6 +21,11 @@ public class Simbolo {
         this.columna = -1;
     }
 
+    public Simbolo(String id, String scope) {
+        this.identificador = id;
+        this.scope = scope;
+    }
+
     public String getIdentificador() {
         return identificador;
     }

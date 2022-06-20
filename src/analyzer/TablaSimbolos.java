@@ -5,10 +5,12 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 public class TablaSimbolos {
-    static ArrayList<Simbolo> tablaSimbolos = new ArrayList<>();
+    //    static ArrayList<Simbolo> tablaSimbolos = new ArrayList<>();
+    private final ArrayList<Simbolo> tablaSimbolos;
 
     //contiene todas las variables EN ORDEN SECUENCIAL
     public ArrayList<Variable> variables;
+    public ArrayList<Funcion> funciones;
 
     //pila que almacena todos los tipos de datos que se definen
     public Deque<TipoDato> tiposDato = new LinkedList<>();
@@ -16,6 +18,7 @@ public class TablaSimbolos {
     public TablaSimbolos() {
         tablaSimbolos = new ArrayList<>();
         this.variables = new ArrayList<>();
+        this.funciones = new ArrayList<>();
     }
 
     public int getTablaSimbolosSize() {
@@ -27,8 +30,20 @@ public class TablaSimbolos {
      *
      * @param simbolo simbolo dado para insertar
      */
-    public void insertar(Simbolo simbolo) {
+    public void insertarSimbolo(Simbolo simbolo) {
         tablaSimbolos.add(simbolo);
+    }
+
+    public void insertarVariable(Variable variable) {
+        variable.setTipoDato(tiposDato.pollLast());
+        this.variables.add(variable);
+        this.insertarSimbolo(variable);
+    }
+
+    public void insertarFuncion(Funcion funcion) {
+        funcion.setTipoDatoRetorno(tiposDato.pollLast());
+        this.funciones.add(funcion);
+        this.insertarSimbolo(funcion);
     }
 
     /**
@@ -48,6 +63,25 @@ public class TablaSimbolos {
             }
         }
         return false;
+    }
+
+    public boolean existeSimbolo(Simbolo simbolo, String scope) {
+        for (Simbolo simbol : tablaSimbolos) {
+            if (simbolo.getIdentificador().equals(simbol.getIdentificador()) && simbolo.getScope().equals(scope)) {
+                return true;
+            }
+        }
+        return false;
+//        Simbolo auxSimbol;
+//        if (simbolo instanceof Variable auxVar) {
+//            for (Simbolo simbol : tablaSimbolos) {
+//                auxSimbol = simbol;
+//                if (auxSimbol instanceof Variable) {
+//                    return (auxSimbol.identificador.equals(auxVar.identificador) && auxSimbol.scope.equals(auxVar.scope));
+//                }
+//            }
+//        }
+//        return false;
     }
 
     /**
@@ -88,6 +122,15 @@ public class TablaSimbolos {
         return null;
     }
 
+    public Simbolo getSimbolo(String nombre, String scope) {
+        for (Simbolo simbolo : tablaSimbolos) {
+            if (simbolo.getIdentificador().equals(nombre) && simbolo.getScope().equals(scope)) {
+                return simbolo;
+            }
+        }
+        return null;
+    }
+
     public boolean verificarTipo(String id, String scope, TipoDato tipoAsig) {
         Variable auxVar = getVariable(id, scope); //encuentra el simbolo
         return auxVar.getTipoDato() == tipoAsig;
@@ -123,6 +166,18 @@ public class TablaSimbolos {
         var.setFila(fila + 1);
         var.setColumna(columna);
         var.setTipoDato(tiposDato.pollLast());
+
+        //Agrega la primera variable de la producción
+        variables.add(var);
+    }
+
+    public void agregarVariable(String identificador, int fila, int columna, String scope) {
+        Variable var = new Variable();
+        var.identificador = identificador;
+        var.setFila(fila + 1);
+        var.setColumna(columna);
+        var.setTipoDato(tiposDato.pollLast());
+        var.setScope(scope);
 
         //Agrega la primera variable de la producción
         variables.add(var);

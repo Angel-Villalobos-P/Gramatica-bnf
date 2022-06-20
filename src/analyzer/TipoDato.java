@@ -7,5 +7,6 @@ public enum TipoDato {
     Char,
     String,
     String_literal,
-    Char_literal
+    Char_literal,
+    Identificador
 }

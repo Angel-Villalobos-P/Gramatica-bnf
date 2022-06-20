@@ -24,6 +24,7 @@ public class sym {
   public static final int Break = 48;
   public static final int Read = 18;
   public static final int Op_Incremento = 37;
+  public static final int Error = 45;
   public static final int Op_Relacional = 39;
   public static final int Punto = 46;
   public static final int Op_Decremento = 38;
@@ -46,7 +47,6 @@ public class sym {
   public static final int Comilla_simple = 36;
   public static final int Char = 5;
   public static final int Print = 16;
-  public static final int ERROR = 45;
   public static final int Case = 15;
   public static final int String = 7;
   public static final int Identificador = 42;
@@ -106,7 +106,7 @@ public class sym {
   "Identificador",
   "Numero",
   "Linea",
-  "ERROR",
+  "Error",
   "Punto",
   "Coma",
   "Break",

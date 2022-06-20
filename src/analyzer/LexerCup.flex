@@ -5,6 +5,8 @@ import java_cup.runtime.Symbol;
 %class LexerCup
 %type java_cup.runtime.Symbol
 %cup
+%line
+%column
 L=[a-zA-Z_]+
 D=[+-]?[0-9]+
 espacio=[ ,\t,\r,\n]+
@@ -75,4 +77,4 @@ break {return new Symbol(sym.Break, yychar, yyline, yytext());}
 {S} {return new Symbol(sym.String_literal, yychar, yyline, yytext());}
 {C} {return new Symbol(sym.Char_literal, yychar, yyline, yytext());}
 /*("(-"{D}+")")|{D}+ {return new Symbol(sym.String_literal, yychar, yyline, yytext());}*/
- . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}
+ . {return new Symbol(sym.Error, yychar, yyline, yytext());}
