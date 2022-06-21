@@ -66,8 +66,8 @@ public class Sintax extends java_cup.runtime.lr_parser {
     "\010\000\002\075\005\000\002\075\006\000\002\075\007" +
     "\000\002\112\003\000\002\112\003\000\002\112\003\000" +
     "\002\104\003\000\002\104\004\000\002\101\006\000\002" +
-    "\030\005\000\002\027\003\000\002\027\005\000\002\103" +
-    "\011\000\002\103\012\000\002\103\013\000\002\103\012" +
+    "\103\011\000\002\103\012\000\002\103\013\000\002\103" +
+    "\012\000\002\027\003\000\002\027\005\000\002\030\005" +
     "\000\002\114\005\000\002\114\006\000\002\113\005\000" +
     "\002\111\003\000\002\111\003\000\002\111\003\000\002" +
     "\111\003\000\002\111\003\000\002\107\005\000\002\107" +
@@ -316,8 +316,8 @@ public class Sintax extends java_cup.runtime.lr_parser {
     "\017\uffd5\020\uffd5\021\uffd5\022\uffd5\023\uffd5\025\uffd5\037" +
     "\uffd5\042\uffd5\047\uffd5\050\uffd5\052\uffd5\054\uffd5\055\uffd5" +
     "\062\uffd5\064\uffd5\065\uffd5\001\002\000\014\004\043\005" +
-    "\157\006\070\007\054\011\062\001\002\000\006\040\uff99" +
-    "\061\uff99\001\002\000\064\003\uff93\004\uff93\005\uff93\006" +
+    "\157\006\070\007\054\011\062\001\002\000\006\040\uff96" +
+    "\061\uff96\001\002\000\064\003\uff93\004\uff93\005\uff93\006" +
     "\uff93\007\uff93\011\uff93\015\uff93\017\uff93\020\uff93\021\uff93" +
     "\022\uff93\023\uff93\025\uff93\027\uff93\037\uff93\040\uff93\042" +
     "\uff93\047\uff93\050\uff93\052\uff93\054\uff93\055\uff93\062\uff93" +
@@ -326,9 +326,9 @@ public class Sintax extends java_cup.runtime.lr_parser {
     "\005\uff92\006\uff92\007\uff92\011\uff92\015\uff92\017\uff92\020" +
     "\uff92\021\uff92\022\uff92\023\uff92\025\uff92\027\uff92\037\uff92" +
     "\040\uff92\042\uff92\047\uff92\050\uff92\052\uff92\054\uff92\055" +
-    "\uff92\062\uff92\064\uff92\065\uff92\001\002\000\006\040\uff98" +
-    "\061\uff98\001\002\000\004\054\uffe8\001\002\000\004\054" +
-    "\161\001\002\000\006\040\uff9a\061\uff9a\001\002\000\032" +
+    "\uff92\062\uff92\064\uff92\065\uff92\001\002\000\006\040\uff95" +
+    "\061\uff95\001\002\000\004\054\uffe8\001\002\000\004\054" +
+    "\161\001\002\000\006\040\uff94\061\uff94\001\002\000\032" +
     "\005\121\010\130\012\125\037\016\047\034\050\040\052" +
     "\024\053\122\054\123\055\117\064\015\065\053\001\002" +
     "\000\004\040\164\001\002\000\060\003\uff9b\004\uff9b\005" +
@@ -520,9 +520,9 @@ public class Sintax extends java_cup.runtime.lr_parser {
     "\006\ufff6\007\ufff6\011\ufff6\015\ufff6\017\ufff6\020\ufff6\022" +
     "\ufff6\025\ufff6\037\ufff6\042\315\047\ufff6\050\ufff6\052\ufff6" +
     "\054\ufff6\055\ufff6\064\ufff6\065\ufff6\001\002\000\016\002" +
-    "\uff95\004\uff95\005\uff95\006\uff95\007\uff95\011\uff95\001\002" +
-    "\000\016\002\uff94\004\uff94\005\uff94\006\uff94\007\uff94\011" +
-    "\uff94\001\002\000\050\003\050\004\043\005\045\006\070" +
+    "\uff98\004\uff98\005\uff98\006\uff98\007\uff98\011\uff98\001\002" +
+    "\000\016\002\uff97\004\uff97\005\uff97\006\uff97\007\uff97\011" +
+    "\uff97\001\002\000\050\003\050\004\043\005\045\006\070" +
     "\007\054\011\062\015\023\017\042\020\052\022\055\025" +
     "\037\037\016\047\034\050\040\052\024\054\065\055\074" +
     "\064\015\065\053\001\002\000\052\003\ufff6\004\ufff6\005" +
@@ -535,9 +535,9 @@ public class Sintax extends java_cup.runtime.lr_parser {
     "\002\000\052\003\ufff6\004\ufff6\005\ufff6\006\ufff6\007\ufff6" +
     "\011\ufff6\015\ufff6\017\ufff6\020\ufff6\022\ufff6\025\ufff6\037" +
     "\ufff6\042\323\047\ufff6\050\ufff6\052\ufff6\054\ufff6\055\ufff6" +
-    "\064\ufff6\065\ufff6\001\002\000\016\002\uff96\004\uff96\005" +
-    "\uff96\006\uff96\007\uff96\011\uff96\001\002\000\016\002\uff97" +
-    "\004\uff97\005\uff97\006\uff97\007\uff97\011\uff97\001\002\000" +
+    "\064\ufff6\065\ufff6\001\002\000\016\002\uff99\004\uff99\005" +
+    "\uff99\006\uff99\007\uff99\011\uff99\001\002\000\016\002\uff9a" +
+    "\004\uff9a\005\uff9a\006\uff9a\007\uff9a\011\uff9a\001\002\000" +
     "\016\002\uff9c\004\uff9c\005\uff9c\006\uff9c\007\uff9c\011\uff9c" +
     "\001\002" });
 
@@ -760,6 +760,7 @@ public class Sintax extends java_cup.runtime.lr_parser {
     private boolean globalScope = true;
     private String scopeName;
     private TipoDato tipoAsignacion;
+    private TipoDato tipoReturn; // solo para funciones
 
     public void syntax_error(Symbol s){
         this.s = s;
@@ -770,10 +771,7 @@ public class Sintax extends java_cup.runtime.lr_parser {
 
         System.out.println("compiler has detected a syntax error at line " + s.left
                     + " column " + s.right);
-        MainFrm.frm.setTextSintactico("compiler has detected a syntax error at line " + s.left
-                                                          + " column " + s.right);
         System.out.println("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
-        MainFrm.frm.setTextSintactico("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
     }
 
     public Symbol getS(){
@@ -791,24 +789,20 @@ public class Sintax extends java_cup.runtime.lr_parser {
 //        }
         //mostrar error en la UI
         System.out.println(msg);
-        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String identificador, int fila, int columna) {
         String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna +
         ": tipos de datos no corresponden en la asignación de " + identificador;
         System.out.println(msg);
-        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String errorMsg) {
             //String errorMsg = "Error en " + identificador + " " + msg;
             System.out.println(errorMsg);
-            MainFrm.frm.setTextSemantico(errorMsg);
         }
 
     public void report_error(String message, Object info) {
         if (info instanceof String) {
             System.out.println(message);
-            MainFrm.frm.setTextSemantico(message);
         } else {
             if (info instanceof Symbol s) {
                 String m = "Error sintático en: " + message;
@@ -816,7 +810,6 @@ public class Sintax extends java_cup.runtime.lr_parser {
     //          ErrorUI(m, s.value.toString(), (s.left + 1), s.right);
             } else {
             System.err.println(message);
-            MainFrm.frm.setTextSemantico(message);
             }
         }
     }
@@ -825,6 +818,13 @@ public class Sintax extends java_cup.runtime.lr_parser {
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$Sintax$actions {
+
+
+    public PilaSemantica pilaSemantica = new PilaSemantica();
+    public PilaSemantica pilaSemantica_2 = new PilaSemantica();
+
+    public boolean datosGlobales = true;
+
   private final Sintax parser;
 
   /** Constructor */
@@ -882,7 +882,12 @@ class CUP$Sintax$actions {
           case 3: // MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre 
             {
               Object RESULT =null;
+		
+//        globalScope = false;
+//        scopeName = "main";
+        Generador.newFunc("main");
 
+    
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("MAIN",68, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-6)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
             }
           return CUP$Sintax$result;
@@ -1017,13 +1022,14 @@ class CUP$Sintax$actions {
         }
         Variable var = new Variable(id.toString(), scopeName);
 
-        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
 
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
             ErrorSemantico(var);
         }
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         //========================================
 //        if (globalScope) {//setea el scope a global
 //            Variable newVar = null;
@@ -1095,8 +1101,6 @@ class CUP$Sintax$actions {
         }
         Variable var = new Variable(id.toString(), scopeName);
 
-        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
-
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
@@ -1105,10 +1109,11 @@ class CUP$Sintax$actions {
         //verificar tipos
         if (!tablaSimbolos.verificarTipo(id.toString(), scopeName, tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
             ErrorSemantico(id.toString(), idleft, idright);
             return null;
         }
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         //por acá debe hacer la comprobación de tipos
         //...
 //        if (globalScope) {//setea el scope a global
@@ -1170,7 +1175,6 @@ class CUP$Sintax$actions {
             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
         } else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
 
 //        RESULT = new Symbol(-1, _tipoAsig.toString());
@@ -1341,7 +1345,6 @@ class CUP$Sintax$actions {
             tipoAsignacion = TipoDato.Float;
         } else {
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
     
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("TIPOASIG",70, ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
@@ -1358,7 +1361,7 @@ class CUP$Sintax$actions {
 		
         RESULT = new Symbol(-1, op_bool.toString());
         tipoAsignacion = TipoDato.Bool;
-    
+
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("TIPOASIG",70, ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
             }
           return CUP$Sintax$result;
@@ -1595,7 +1598,6 @@ class CUP$Sintax$actions {
              tipoAsignacion = TipoDato.Float;
          } else {
              System.out.println("Operación inválida, tipo de datos diferentes");
-             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
          //else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", variable.getTipoDato())){ //comprobar el tipo
              //System.out.println("Operación inválida, tipo de datos diferentes <-");
@@ -1782,7 +1784,6 @@ class CUP$Sintax$actions {
              ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
          } else if (variable.getTipoDato() != TipoDato.Bool){
              System.out.println("Operación inválida, tipo de datos diferentes");
-             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
      
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("EXPRLOG",50, ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
@@ -2042,40 +2043,14 @@ class CUP$Sintax$actions {
           return CUP$Sintax$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 103: // PARAMETRO ::= Coma TIPO Identificador 
-            {
-              Object RESULT =null;
-
-              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAMETRO",22, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-2)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
-            }
-          return CUP$Sintax$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 104: // PARAM ::= PARAMETRO 
-            {
-              Object RESULT =null;
-
-              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAM",21, ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
-            }
-          return CUP$Sintax$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 105: // PARAM ::= PARAM Coma PARAMETRO 
-            {
-              Object RESULT =null;
-
-              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAM",21, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-2)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
-            }
-          return CUP$Sintax$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 106: // FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre 
+          case 103: // FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).value;
 		
+
         globalScope = false;
         Simbolo identificador;
 
@@ -2095,12 +2070,15 @@ class CUP$Sintax$actions {
           return CUP$Sintax$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 107: // FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre 
+          case 104: // FUNC ::= TIPO Identificador Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-6)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-6)).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-6)).value;
+		int _returnleft = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-1)).left;
+		int _returnright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-1)).right;
+		Object _return = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-1)).value;
 		
         globalScope = false;
         Simbolo identificador;
@@ -2108,11 +2086,22 @@ class CUP$Sintax$actions {
         if (!globalScope){
             scopeName = id.toString();
         }
+
         Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
         if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
             tablaSimbolos.insertarFuncion(funcion);
         } else {
             ErrorSemantico(funcion);
+        }
+
+        // comprueba que el tipo de return sea igual al tipo de la funcion, unicamente id como return
+        Symbol __return = (Symbol) _return;
+        Variable variable = tablaSimbolos.getVariable(__return.value.toString(), scopeName);
+        Funcion currentFunction = tablaSimbolos.getFuncion(id.toString(), scopeName);
+        if (variable == null){
+            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+        } else if (variable.getTipoDato() != currentFunction.getTipoDatoRetorno()){
+            System.out.println("Tipo de dato de la función, no corresponde con el return type");
         }
 
     
@@ -2121,20 +2110,67 @@ class CUP$Sintax$actions {
           return CUP$Sintax$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 108: // FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre 
+          case 105: // FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre 
             {
               Object RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-7)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-7)).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-7)).value;
+		int parleft = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).left;
+		int parright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).right;
+		Object par = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-5)).value;
+		
+        globalScope = false;
+        Simbolo identificador;
 
+        if (!globalScope){
+            scopeName = id.toString();
+        }
+        System.out.println(par);
+        Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
+        if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
+            tablaSimbolos.insertarFuncion(funcion);
+        } else {
+            ErrorSemantico(funcion);
+        }
+    
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("FUNC",65, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-8)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
             }
           return CUP$Sintax$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 109: // FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura RETURN Llave_cierre 
+          case 106: // FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura RETURN Llave_cierre 
             {
               Object RESULT =null;
 
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("FUNC",65, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-7)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
+            }
+          return CUP$Sintax$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 107: // PARAM ::= PARAMETRO 
+            {
+              Object RESULT =null;
+
+              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAM",21, ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
+            }
+          return CUP$Sintax$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 108: // PARAM ::= PARAM Coma PARAMETRO 
+            {
+              Object RESULT =null;
+
+              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAM",21, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-2)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
+            }
+          return CUP$Sintax$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 109: // PARAMETRO ::= Coma TIPO Identificador 
+            {
+              Object RESULT =null;
+
+              CUP$Sintax$result = parser.getSymbolFactory().newSymbol("PARAMETRO",22, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-2)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
             }
           return CUP$Sintax$result;
 
@@ -2164,14 +2200,9 @@ class CUP$Sintax$actions {
 		int tipoAsigright = ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-1)).right;
 		Object tipoAsig = (Object)((java_cup.runtime.Symbol) CUP$Sintax$stack.elementAt(CUP$Sintax$top-1)).value;
 		
-         Variable variable = tablaSimbolos.getVariable(tipoAsig.toString(), "Global");//global por ahora
-
-        if (variable == null){
-            ErrorSemantico("Error: " + tipoAsig.toString()+ " no ha sido declarada en el scope");
-        }
         Symbol returnType = (Symbol) tipoAsig;
-        System.out.println(tipoAsig);
-        MainFrm.frm.setTextSemantico(String.valueOf(tipoAsig));
+        System.out.println("---->>>> " + returnType.value);
+        RESULT = new Symbol(-1, returnType.value);
     
               CUP$Sintax$result = parser.getSymbolFactory().newSymbol("RETURN",73, ((java_cup.runtime.Symbol)CUP$Sintax$stack.elementAt(CUP$Sintax$top-2)), ((java_cup.runtime.Symbol)CUP$Sintax$stack.peek()), RESULT);
             }

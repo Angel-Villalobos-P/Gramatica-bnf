@@ -1,37 +1,12 @@
 .data
+x: .float 0.0
+t: .word #-1
+str: .asciiz #-1
 
 
 .text
-li $v0,10
-syscall	 
+main: 
 
-printStr:
-    li   $v0, 4
-    syscall
-    jr $ra
-.end printStr
+.end main
 
-printInt:
-    li   $v0, 1
-    syscall
-    jr $ra
-.end printInt
-
-printFloat:
-    li   $v0, 2
-    syscall
-    jr $ra
-.end printFloat
-
-readInt:
-    li   $v0, 5
-    syscall
-    jr $ra
-.end readInt
-
-readFloat:
-    li   $v0, 6
-    syscall
-    jr $ra
-.end readFloat
 

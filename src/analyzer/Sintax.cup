@@ -5,6 +5,14 @@ import analyzer.Generador.PilaSemantica;
 import analyzer.Generador.Generador;
 import analyzer.MainFrm;
 
+action code
+{:
+    public PilaSemantica pilaSemantica = new PilaSemantica();
+    public PilaSemantica pilaSemantica_2 = new PilaSemantica();
+
+    public boolean datosGlobales = true;
+:}
+
 parser code
 {:
     @Override
@@ -17,6 +25,7 @@ parser code
     private boolean globalScope = true;
     private String scopeName;
     private TipoDato tipoAsignacion;
+    private TipoDato tipoReturn; // solo para funciones
 
     public void syntax_error(Symbol s){
         this.s = s;
@@ -27,10 +36,7 @@ parser code
 
         System.out.println("compiler has detected a syntax error at line " + s.left
                     + " column " + s.right);
-        MainFrm.frm.setTextSintactico("compiler has detected a syntax error at line " + s.left
-                                                          + " column " + s.right);
         System.out.println("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
-        MainFrm.frm.setTextSintactico("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
     }
 
     public Symbol getS(){
@@ -48,24 +54,20 @@ parser code
 //        }
         //mostrar error en la UI
         System.out.println(msg);
-        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String identificador, int fila, int columna) {
         String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna +
         ": tipos de datos no corresponden en la asignación de " + identificador;
         System.out.println(msg);
-        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String errorMsg) {
             //String errorMsg = "Error en " + identificador + " " + msg;
             System.out.println(errorMsg);
-            MainFrm.frm.setTextSemantico(errorMsg);
         }
 
     public void report_error(String message, Object info) {
         if (info instanceof String) {
             System.out.println(message);
-            MainFrm.frm.setTextSemantico(message);
         } else {
             if (info instanceof Symbol s) {
                 String m = "Error sintático en: " + message;
@@ -73,7 +75,6 @@ parser code
     //          ErrorUI(m, s.value.toString(), (s.left + 1), s.right);
             } else {
             System.err.println(message);
-            MainFrm.frm.setTextSemantico(message);
             }
         }
     }
@@ -99,7 +100,13 @@ non terminal Symbol epsilon;
 start with INICIO;
 
 INICIO ::= MAIN | MAIN FUNCS;
-MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre;
+MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE Llave_cierre
+    {:
+//        globalScope = false;
+//        scopeName = "main";
+        Generador.newFunc("main");
+
+    :};
 MAIN ::= Int Main Parentesis_apertura Parentesis_cierre Llave_apertura Llave_cierre;
 
 BLOQUE ::= EXPR | BLOQUE EXPR;
@@ -112,13 +119,14 @@ CREACION ::= TIPO Identificador:id Numeral // e.g: int x#
         }
         Variable var = new Variable(id.toString(), scopeName);
 
-        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
 
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
             ErrorSemantico(var);
         }
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         //========================================
 //        if (globalScope) {//setea el scope a global
 //            Variable newVar = null;
@@ -162,8 +170,6 @@ CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int
         }
         Variable var = new Variable(id.toString(), scopeName);
 
-        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
-
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
@@ -172,10 +178,11 @@ CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int
         //verificar tipos
         if (!tablaSimbolos.verificarTipo(id.toString(), scopeName, tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
             ErrorSemantico(id.toString(), idleft, idright);
             return null;
         }
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         //por acá debe hacer la comprobación de tipos
         //...
 //        if (globalScope) {//setea el scope a global
@@ -213,7 +220,6 @@ ASIGNAR ::= Identificador:id Igual TIPOASIG:_tipoAsig Numeral // e.g: x = y#
             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
         } else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
 
 //        RESULT = new Symbol(-1, _tipoAsig.toString());
@@ -285,14 +291,13 @@ TIPOASIG ::= Numero:num
             tipoAsignacion = TipoDato.Float;
         } else {
             System.out.println("Operación inválida, tipo de datos diferentes");
-            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
     :}
     | Op_Booleano:op_bool
     {:
         RESULT = new Symbol(-1, op_bool.toString());
         tipoAsignacion = TipoDato.Bool;
-    :}
+:}
 
   | ARRAY | BOOL | OPERACION | USEFUNC;
 
@@ -336,7 +341,6 @@ OPERANDO ::= Identificador:id
              tipoAsignacion = TipoDato.Float;
          } else {
              System.out.println("Operación inválida, tipo de datos diferentes");
-             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
          //else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", variable.getTipoDato())){ //comprobar el tipo
              //System.out.println("Operación inválida, tipo de datos diferentes <-");
@@ -377,7 +381,6 @@ EXPRLOG ::= Identificador:id
              ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
          } else if (variable.getTipoDato() != TipoDato.Bool){
              System.out.println("Operación inválida, tipo de datos diferentes");
-             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
      :}
     | BOOL; // | USEFUNC;
@@ -412,11 +415,9 @@ FUNCS ::= FUNC | FUNCS FUNC;
 
 FUNCPRINT ::= Print Parentesis_apertura TIPOASIG Parentesis_cierre;
 
-PARAMETRO ::= Coma TIPO Identificador;
-PARAM ::= PARAMETRO | PARAM Coma PARAMETRO;
-
 FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apertura RETURN Llave_cierre
     {:
+
         globalScope = false;
         Simbolo identificador;
 
@@ -431,7 +432,7 @@ FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apert
         }
 
     :};
-FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre
+FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apertura BLOQUE RETURN:_return Llave_cierre
 {:
         globalScope = false;
         Simbolo identificador;
@@ -439,6 +440,7 @@ FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apert
         if (!globalScope){
             scopeName = id.toString();
         }
+
         Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
         if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
             tablaSimbolos.insertarFuncion(funcion);
@@ -446,9 +448,37 @@ FUNC ::= TIPO Identificador:id Parentesis_apertura Parentesis_cierre Llave_apert
             ErrorSemantico(funcion);
         }
 
+        // comprueba que el tipo de return sea igual al tipo de la funcion, unicamente id como return
+        Symbol __return = (Symbol) _return;
+        Variable variable = tablaSimbolos.getVariable(__return.value.toString(), scopeName);
+        Funcion currentFunction = tablaSimbolos.getFuncion(id.toString(), scopeName);
+        if (variable == null){
+            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
+        } else if (variable.getTipoDato() != currentFunction.getTipoDatoRetorno()){
+            System.out.println("Tipo de dato de la función, no corresponde con el return type");
+        }
+
     :};
-FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre;
+FUNC ::= TIPO Identificador:id Parentesis_apertura PARAM:par Parentesis_cierre Llave_apertura BLOQUE RETURN Llave_cierre
+{:
+        globalScope = false;
+        Simbolo identificador;
+
+        if (!globalScope){
+            scopeName = id.toString();
+        }
+        System.out.println(par);
+        Funcion funcion = new Funcion(id.toString(), scopeName, null);//null porque no tiene param
+        if (!tablaSimbolos.existeSimbolo(funcion, scopeName)){
+            tablaSimbolos.insertarFuncion(funcion);
+        } else {
+            ErrorSemantico(funcion);
+        }
+    :};
 FUNC ::= TIPO Identificador Parentesis_apertura PARAM Parentesis_cierre Llave_apertura RETURN Llave_cierre;
+
+PARAM ::= PARAMETRO | PARAM Coma PARAMETRO;
+PARAMETRO ::= Coma TIPO Identificador;
 
 USEFUNC ::= Identificador Parentesis_apertura Parentesis_cierre;
 USEFUNC ::= Identificador Parentesis_apertura PARAM Parentesis_cierre;
@@ -456,14 +486,9 @@ USEFUNC ::= Identificador Parentesis_apertura PARAM Parentesis_cierre;
 
 RETURN ::= Return TIPOASIG:tipoAsig Numeral
     {:
-         V ariable variable = tablaSimbolos.getVariable(id.toString(), "Global");//global por ahora
-
-        if (variable == null){
-            ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
-        }
         Symbol returnType = (Symbol) tipoAsig;
-        System.out.println(tipoAsig);
-        MainFrm.frm.setTextSemantico(tipoAsig);
+        System.out.println("---->>>> " + returnType.value);
+        RESULT = new Symbol(-1, returnType.value);
     :};
 
 EXPRCOM ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS | TIPOASIG;

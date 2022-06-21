@@ -2,6 +2,7 @@ package analyzer;
 
 import static analyzer.Generador.Generador.getCode;
 
+import analyzer.Generador.Generador;
 import java_cup.runtime.DefaultSymbolFactory;
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
@@ -74,7 +75,10 @@ public class MainFrm extends javax.swing.JFrame {
                 s.parse();
                 setTextSintactico("Analisis realizado correctamente");
                 txt_sintactico.setForeground(new Color(25, 111, 61));
+
                 generar_codigo(getCode());
+                Generador.setNull();
+
             } catch (Exception ex) {
                 Symbol sym = s.getS();
                 setTextSintactico("Error de sintaxis");
@@ -314,8 +318,8 @@ public class MainFrm extends javax.swing.JFrame {
 
     private void generar_codigo(String code) {
         try {
-            FileWriter myWriter = new FileWriter(filename + ".asm");
-            myWriter.write(code);
+            PrintWriter myWriter = new PrintWriter(filename + ".asm");
+            myWriter.print(code);
             myWriter.close();
             System.out.println("Archivo ASM creado");
         } catch (IOException e) {

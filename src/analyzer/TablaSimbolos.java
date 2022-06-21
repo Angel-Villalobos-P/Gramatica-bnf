@@ -193,6 +193,15 @@ public class TablaSimbolos {
         return stringTable.toString();
     }
 
+    public Funcion getFuncion(String nombre, String scope) {
+        for (Simbolo simbolo : tablaSimbolos) {
+            if (simbolo instanceof Funcion && simbolo.identificador.equals(nombre) && simbolo.scope.equals(scope)) {
+                return (Funcion) simbolo;
+            }
+        }
+        return null;
+    }
+
     public void printTablaSimbolos() {
         System.out.println(getTablaSimbolos());
     }

@@ -4,10 +4,12 @@ public class EtiquetasRedir {
 
     private String etiqueta_Inicio;
     private String etiqueta_Final;
+    private String codigo;
 
     public EtiquetasRedir(String etiqueta_Inicio, String etiqueta_Final) {
         this.etiqueta_Inicio = etiqueta_Inicio;
         this.etiqueta_Final = etiqueta_Final;
+        this.codigo = "\n";
     }
 
     public String getEtiqueta_Inicio() {
@@ -24,5 +26,13 @@ public class EtiquetasRedir {
 
     public void setEtiqueta_Final(String etiqueta_Final) {
         this.etiqueta_Final = etiqueta_Final;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo += codigo + "\n";
     }
 }
