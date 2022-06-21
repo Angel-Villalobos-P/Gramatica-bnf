@@ -1,5 +1,7 @@
 package analyzer;
 
+import static analyzer.Generador.Generador.getCode;
+
 import java_cup.runtime.DefaultSymbolFactory;
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
@@ -21,10 +23,12 @@ import java.util.logging.Logger;
 
 public class MainFrm extends javax.swing.JFrame {
 
+    public static MainFrm frm;
     DefaultTableModel model;
+    String filename;
 
     public MainFrm() {
-
+        frm = this;
         model = (DefaultTableModel) table1.getModel();
         model.addColumn("Símbolos");
         model.addColumn("Línea");
@@ -37,7 +41,7 @@ public class MainFrm extends javax.swing.JFrame {
                 JFileChooser chooser = new JFileChooser();
                 chooser.showOpenDialog(null);
                 File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
-
+                filename = archivo.getName().substring(0, archivo.getName().length()-4);
                 try {
                     String ST = new String(Files.readAllBytes(archivo.toPath()));
                     txt_file.setText(ST);
@@ -61,16 +65,19 @@ public class MainFrm extends javax.swing.JFrame {
         });
 
         btn_sintactico.addActionListener(e -> {
+            txt_sintactico.setText(null);
+            txt_semantico.setText(null);
             String ST = txt_file.getText();
             Sintax s = new Sintax(new LexerCup(new StringReader(ST)));
 
             try {
                 s.parse();
-                txt_sintactico.setText("Analisis realizado correctamente");
+                setTextSintactico("Analisis realizado correctamente");
                 txt_sintactico.setForeground(new Color(25, 111, 61));
+                generar_codigo(getCode());
             } catch (Exception ex) {
                 Symbol sym = s.getS();
-                txt_sintactico.setText("Error de sintaxis");
+                setTextSintactico("Error de sintaxis");
                 txt_sintactico.setForeground(new Color(162, 2, 2));
 //                System.out.println(sym);
 //                System.out.println(s.test());
@@ -303,6 +310,25 @@ public class MainFrm extends javax.swing.JFrame {
         }
 
 
+    }
+
+    private void generar_codigo(String code) {
+        try {
+            FileWriter myWriter = new FileWriter(filename + ".asm");
+            myWriter.write(code);
+            myWriter.close();
+            System.out.println("Archivo ASM creado");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void setTextSemantico(String txt){
+        txt_semantico.setText(txt + "\n" + txt_semantico.getText());
+    }
+    public void setTextSintactico(String txt){
+        txt_sintactico.setText(txt + "\n" + txt_sintactico.getText());
     }
 
     public static void main(String[] args) {

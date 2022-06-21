@@ -70,8 +70,8 @@ public class Main {
      */
 
     //Ruta del proyecto
-    static String rootPath = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf";
-
+//    static String rootPath = "/Users/angel/OneDrive - Estudiantes ITCR/I-Semestre 2022/Compiladores/Gramatica-bnf";
+    static String rootPath = "C:/Users/Diego/OneDrive - Estudiantes ITCR/Documentos/GitHub/Gramatica-bnf";
     public static void main(String[] args) throws Exception {
 
 //        System.out.println("--- generar lexer ---");

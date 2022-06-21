@@ -1,6 +1,9 @@
 package analyzer;
 
 import java_cup.runtime.Symbol;
+import analyzer.Generador.PilaSemantica;
+import analyzer.Generador.Generador;
+import analyzer.MainFrm;
 
 parser code
 {:
@@ -24,7 +27,10 @@ parser code
 
         System.out.println("compiler has detected a syntax error at line " + s.left
                     + " column " + s.right);
+        MainFrm.frm.setTextSintactico("compiler has detected a syntax error at line " + s.left
+                                                          + " column " + s.right);
         System.out.println("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
+        MainFrm.frm.setTextSintactico("Syntax error: línea: "+fila +" columna " + columna + " lexema: "+lexema);
     }
 
     public Symbol getS(){
@@ -42,20 +48,24 @@ parser code
 //        }
         //mostrar error en la UI
         System.out.println(msg);
+        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String identificador, int fila, int columna) {
         String msg = "Error en la línea "+ (fila+1) + ", columna "+ columna +
         ": tipos de datos no corresponden en la asignación de " + identificador;
         System.out.println(msg);
+        MainFrm.frm.setTextSemantico(msg);
     }
     public void ErrorSemantico(String errorMsg) {
             //String errorMsg = "Error en " + identificador + " " + msg;
             System.out.println(errorMsg);
+            MainFrm.frm.setTextSemantico(errorMsg);
         }
 
     public void report_error(String message, Object info) {
         if (info instanceof String) {
             System.out.println(message);
+            MainFrm.frm.setTextSemantico(message);
         } else {
             if (info instanceof Symbol s) {
                 String m = "Error sintático en: " + message;
@@ -63,6 +73,7 @@ parser code
     //          ErrorUI(m, s.value.toString(), (s.left + 1), s.right);
             } else {
             System.err.println(message);
+            MainFrm.frm.setTextSemantico(message);
             }
         }
     }
@@ -100,6 +111,9 @@ CREACION ::= TIPO Identificador:id Numeral // e.g: int x#
             scopeName = "Global";
         }
         Variable var = new Variable(id.toString(), scopeName);
+
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
@@ -147,6 +161,9 @@ CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int
             scopeName = "Global";
         }
         Variable var = new Variable(id.toString(), scopeName);
+
+        Generador.declareVariable(var.identificador, var.getTipoDato().toString(), Integer.toString(0));
+
         if (!tablaSimbolos.existeSimbolo(var, scopeName)){
             tablaSimbolos.insertarVariable(var);
         } else {
@@ -155,6 +172,7 @@ CREAASIG ::= TIPO Identificador:id Igual TIPOASIG:_tipoAsign Numeral // e.g: int
         //verificar tipos
         if (!tablaSimbolos.verificarTipo(id.toString(), scopeName, tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
+            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
             ErrorSemantico(id.toString(), idleft, idright);
             return null;
         }
@@ -195,6 +213,7 @@ ASIGNAR ::= Identificador:id Igual TIPOASIG:_tipoAsig Numeral // e.g: x = y#
             ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
         } else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", tipoAsignacion)){
             System.out.println("Operación inválida, tipo de datos diferentes");
+            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
 
 //        RESULT = new Symbol(-1, _tipoAsig.toString());
@@ -266,6 +285,7 @@ TIPOASIG ::= Numero:num
             tipoAsignacion = TipoDato.Float;
         } else {
             System.out.println("Operación inválida, tipo de datos diferentes");
+            MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
         }
     :}
     | Op_Booleano:op_bool
@@ -316,6 +336,7 @@ OPERANDO ::= Identificador:id
              tipoAsignacion = TipoDato.Float;
          } else {
              System.out.println("Operación inválida, tipo de datos diferentes");
+             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
          //else if (!tablaSimbolos.verificarTipo(id.toString(), "Global", variable.getTipoDato())){ //comprobar el tipo
              //System.out.println("Operación inválida, tipo de datos diferentes <-");
@@ -356,6 +377,7 @@ EXPRLOG ::= Identificador:id
              ErrorSemantico("Error: " + id.toString()+ " no ha sido declarada en el scope");
          } else if (variable.getTipoDato() != TipoDato.Bool){
              System.out.println("Operación inválida, tipo de datos diferentes");
+             MainFrm.frm.setTextSemantico("Operación inválida, tipo de datos diferentes");
          }
      :}
     | BOOL; // | USEFUNC;
@@ -441,6 +463,7 @@ RETURN ::= Return TIPOASIG:tipoAsig Numeral
         }
         Symbol returnType = (Symbol) tipoAsig;
         System.out.println(tipoAsig);
+        MainFrm.frm.setTextSemantico(tipoAsig);
     :};
 
 EXPRCOM ::= VARIABLE | OPERACION | ESTRUCTURA | FUNCS | TIPOASIG;
